@@ -6,7 +6,7 @@ var mysql = require('mysql');
 var cors = require('cors');
 var auth = require('./lib/auth');
 
-app.locals.jdata = require('./db-config.json');
+var jdata = require('./db-config.json');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
@@ -24,3 +24,10 @@ var connection = mysql.createConnection({
     password  : jdata.password,
     database  : jdata.database
 });
+
+app.get('/index', function (req, res) {
+  res.end(jdata.host);
+
+})
+
+app.listen(3000);
