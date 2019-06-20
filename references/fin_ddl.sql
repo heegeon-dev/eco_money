@@ -53,7 +53,8 @@ CREATE TABLE ACCOUNT (
 CREATE TABLE USER (
 	UID      VARCHAR(255) NOT NULL, -- 유저ID
 	email    VARCHAR(255) NOT NULL, -- ID
-	password VARCHAR(255) NOT NULL  -- 비밀번호
+	password VARCHAR(255) NOT NULL,  -- 비밀번호
+	hashtag  VARCHAR(5000)
 );
 
 -- 유저
