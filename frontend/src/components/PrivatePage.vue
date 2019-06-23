@@ -235,6 +235,7 @@ p{
 #available p {
   width: 100%;
   font-size: 21px;
+  text-align: center;
   color: #fcaf17;
 }
 input#calendar{
@@ -295,21 +296,21 @@ label{
 }
 #Piegraph{
   position: relative;
-  width: 60%;
+  width: 52%;
   float: left;
   margin-top: 2%;
 }
 #graphdetails {
-  width: 31%;
+  width: 35%;
   float: left;
   font-size: 0.8em;
   margin-top: 2%;
 }
 #title{
   position: absolute;
-  font-size: 1rem;
-  top: 42%;
-  left: 42%;
+  font-size: 1.5rem;
+  top: 45%;
+  left: 45%;
   width: 15%;
   float: left;
 }
