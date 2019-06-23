@@ -3,13 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mysql = require('mysql');
+var db = require('./db-config.json');                                                                    
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var con = mysql.createConnection({
+  host     : db.host,
+  user     :  db.user,
+  password : db.password,
+  database : db.database
+})
 
 var app = express();
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -19,8 +23,33 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
+var joinRouter = require('./routes/join');
+var likeRouter = require('./routes/like');
+var postRouter = require('./routes/post');
+var logoutRouter = require('./routes/logout');
+
+var testRouter = require('./routes/test');
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/test',testRouter);
+app.use('/join',joinRouter);
+app.use('/like',likeRouter);
+app.use('/post',postRouter);
+app.use('/logout',logoutRouter);
+app.use('/login',loginRouter);
+
+var con = mysql.createConnection({
+  host     : db.host,
+  user     :  db.user,
+  password : db.password,
+  database : db.database
+})
+
+// view engine setup
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
