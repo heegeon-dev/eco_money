@@ -15,7 +15,7 @@ router.post('/', function(req, res, next) {
         var password = req.body.password;
         var nickname = req.body.nickname;
         console.log(nickname, email, password);
-        var sql = 'INSERT INTO `fintech`.`user` (email, nickname,password ) VALUES (?,?,?);'
+        var sql = 'INSERT INTO user (email, nickname,password ) VALUES (?,?,?);'
         con.query(sql,[email, nickname, password ], function (error, results) {
           if (error) throw error;  
           else {
