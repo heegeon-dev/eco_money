@@ -10,7 +10,17 @@ import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
 import ToggleButton from 'vue-js-toggle-button'
 import DateRangePicker from '@gravitano/vue-date-range-picker'
+import VueJsModal from 'vue-js-modal'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
+Vue.use(VueJsModal, {
+  dialog: true,
+  dynamic: true,
+  dynamicDefaults: {
+    foo: 'foo'
+  }
+})
 Vue.use(DateRangePicker)
 Vue.use(ToggleButton)
 Vue.use(VueMomentJS, moment)

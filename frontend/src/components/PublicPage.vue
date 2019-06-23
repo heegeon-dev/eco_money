@@ -1,17 +1,33 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>33333333</h2>
+    <button id="show-modal" @click="showModal = true">Show Modal</button>
+    <app-my-modal v-if="showModal" @close="closeModal()">
+      <div>
+        This is modal body
+      </div>
+    </app-my-modal>
   </div>
 </template>
 
 <script>
+import myModal from '../Modal/Modal.vue'
+
 export default {
-  name: 'privatepage',
+  name: 'publicpage',
+  components:{
+    appMyModal: myModal
+  },
   data () {
     return {
-      msg: 'wwww'
+      msg: 'wwww',
+      showModal:false,
     }
+  },
+  methods: {
+    closeModal(){
+      this.showModal = !this.showModal
+    } 
   }
 }
 </script>
