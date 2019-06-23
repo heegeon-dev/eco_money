@@ -54,12 +54,12 @@ CREATE TABLE USER (
 	UID      VARCHAR(255) NOT NULL, -- 유저ID
 	email    VARCHAR(255) NOT NULL, -- ID
 	password VARCHAR(255) NOT NULL,  -- 비밀번호
-	hashtag  VARCHAR(5000),
-    phashtag varchar(5000),
-    goal	 VARCHAR(5000),
-    userseqnum VARCHAR(5000),
-    accessToken VARCHAR(5000),
-    refreshToken VARCHAR(5000)
+	hashtag  VARCHAR(255),
+    phashtag varchar(255),
+    goal	 VARCHAR(255),
+    userseqnum VARCHAR(255),
+    accessToken VARCHAR(255),
+    refreshToken VARCHAR(255)
 );
 
 -- 유저
