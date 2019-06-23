@@ -6,7 +6,7 @@ var router = express.Router();
 router.get("/", function(req,res,next){
 
     if (req.session.user) {
-      console.log('logout!')
+
       req.session.destroy(
           function (err) {
               if (err) {
