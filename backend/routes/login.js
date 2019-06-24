@@ -22,7 +22,7 @@ router.post("/", function (req, res, next) {
       // 로그인이 되어 있지 않을 경우 (로그인동작)
       var userEmail = req.body.email;
       var userPassword = req.body.password;
-      console.log("user email, password : " +_userEmail+ ", " + userPassword);
+      console.log("user email, password : " +userEmail+ ", " + userPassword);
     
       var sql = "SELECT * FROM user WHERE email = ?";
       con.query(sql, [userEmail], function (error, results) {
