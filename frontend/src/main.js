@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 // Layouts
 import Maincontent from '@/layouts/MainContent.vue'
-import store from './store'
+
 import Vuex from 'vuex'
 import axios from 'axios'
 import moment from 'moment'
@@ -39,6 +39,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>',
-  store
+  template: '<App/>'
 })

@@ -43,7 +43,7 @@ export default {
         }).then(
             (response) => { 
                 console.log(response.data)
-                if(response.data == "Join!"){
+                if(response.data == "my key!"){
                     this.$router.push("/MainContent")
                 }
             },
