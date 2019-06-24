@@ -38,8 +38,12 @@ export default {
               email: this.mail_address,
               password: this.password
           }).then(
-              (response) => { console.log(response) },
-            (error) => { console.log(error) }
+              (response) => { 
+                if(response.data == "login!"){
+                    this.$router.push("/MainContent")
+                }
+               },
+              (error) => { console.log(error) }
               // res=> {
               //     console.log(res)
               //     this.$router.push("/MainContent")

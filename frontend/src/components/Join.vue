@@ -47,7 +47,6 @@ export default {
             nickname: this.nickname
         }).then(
             (response) => { 
-                console.log(response.data)
                 if(response.data == "my key!"){
                     this.$router.push("/MainContent")
                 }
