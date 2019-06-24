@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
+var db = require('../db-config.json');                                                                    
 
+
+
+var con = mysql.createConnection({
+  host     : db.host,
+  user     :  db.user,
+  password : db.password,
+  database : db.database
+})
 router.post("/", function (req, res, next) {
     let body = req.body;
     
@@ -18,17 +28,17 @@ router.post("/", function (req, res, next) {
       con.query(sql, [userEmail], function (error, results) {
         if (error) throw error;  
         else {
-    
-          if(userPassword == results[0].user_password){
+          console.log(results[0].password);
+          if(userPassword == results[0].password){
             req.session.user =
             {
-                uid : results[0].uid,
-                nickname : results[0].nickname,
+                uid : results.uid,
+                nickname : results.nickname,
                 email: userEmail,
             };
             res.send('login!');
           }else {
-              res.json('등록정보가 없습니다');
+              res.json();
           }
         }
       });

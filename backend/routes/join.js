@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
           if (error) throw error;  
           else {
               console.log(this.sql);
-              res.send('Join!');
+              res.send('my key!');
           }
         });
       });
