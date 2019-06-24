@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
+var db = require('../db-config.json');                                                                    
 
+
+
+var con = mysql.createConnection({
+  host     : db.host,
+  user     :  db.user,
+  password : db.password,
+  database : db.database
+})
 /* GET users listing. */
 router.post('/',function(req,res,next){
     if (req.session.user) {
@@ -15,8 +25,7 @@ router.post('/',function(req,res,next){
         })
 
     } else {
-        console.log('로그인 안되어 있음');
-        res.redirect('/login.html');
+        res.send('NO');
     }
 })
 

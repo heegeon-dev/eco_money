@@ -3,7 +3,13 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('test');
+  if (req.session.user) {
+    
+    
+
+  }else{
+      res.send('NO');
+  }
 });
 
 module.exports = router;

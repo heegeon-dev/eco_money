@@ -18,8 +18,7 @@ router.get('/', function(req, res, next) {
         // });
     
     }else{
-        console.log('로그인 안되어 있음');
-        res.redirect('/login.html');
+        res.send('NO');
     }
 });
 

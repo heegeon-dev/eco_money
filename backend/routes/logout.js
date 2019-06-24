@@ -20,8 +20,7 @@ router.get("/", function(req,res,next){
       );          //세션정보 삭제
     
     } else {
-      console.log('로그인 안되어 있음');
-      res.redirect('/login.html');
+      res.send('NO');
     }
     });
 module.exports = router;

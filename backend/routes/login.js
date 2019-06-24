@@ -22,13 +22,13 @@ router.post("/", function (req, res, next) {
       // 로그인이 되어 있지 않을 경우 (로그인동작)
       var userEmail = req.body.email;
       var userPassword = req.body.password;
-      console.log(userEmail, userPassword);
+      console.log("user email, password : " +_userEmail+ ", " + userPassword);
     
       var sql = "SELECT * FROM user WHERE email = ?";
       con.query(sql, [userEmail], function (error, results) {
         if (error) throw error;  
         else {
-          console.log(results[0].password);
+          console.log("db password : " + results[0].password);
           if(userPassword == results[0].password){
             req.session.user =
             {
@@ -38,7 +38,7 @@ router.post("/", function (req, res, next) {
             };
             res.send('login!');
           }else {
-              res.json();
+              res.json('incorrect password');
           }
         }
       });
