@@ -3,9 +3,6 @@
     <h1>{{ msg }}</h1>
     <button id="show-modal" @click="showModal = true">Show Modal</button>
     <app-my-modal v-if="showModal" @close="closeModal()">
-      <div>
-        This is modal body
-      </div>
     </app-my-modal>
   </div>
 </template>

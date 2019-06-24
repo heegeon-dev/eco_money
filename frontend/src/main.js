@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 // Layouts
 import Maincontent from '@/layouts/MainContent.vue'
+import store from './store'
+import Vuex from 'vuex'
 import axios from 'axios'
 import moment from 'moment'
 import VueMomentJS from 'vue-momentjs'
@@ -24,7 +26,9 @@ Vue.use(VueJsModal, {
 Vue.use(DateRangePicker)
 Vue.use(ToggleButton)
 Vue.use(VueMomentJS, moment)
-Vue.prototype.$http = axios
+// Vue.prototype.$Http = axios
+Vue.$http = axios
+Vue.use(Vuex)
 
 Vue.component('maincontent-layout', Maincontent)
 Vue.config.productionTip = false
@@ -35,5 +39,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store
 })
