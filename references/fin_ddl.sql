@@ -1,3 +1,6 @@
+-- 댓글
+DROP TABLE REPLY;
+
 -- 좋아요
 DROP TABLE LIKEs;
 
@@ -15,18 +18,18 @@ DROP TABLE USER;
 
 -- 게시물
 CREATE TABLE POST (
-	PNO      VARCHAR(255)  NOT NULL, -- 게시물번호
-	UID      VARCHAR(255)  NOT NULL, -- 유저ID
+	PNO      INTEGER NOT NULL auto_increment primary key, -- 게시물번호
+	UID      INTEGER  NOT NULL, -- 유저ID
 	contents VARCHAR(5000) NULL      -- 내용
 );
 
--- 게시물
-ALTER TABLE POST
-	ADD
-		CONSTRAINT PK_POST -- 게시물 기본키
-		PRIMARY KEY (
-			PNO -- 게시물번호
-		);
+-- 댓글
+CREATE TABLE Reply (
+	contents VARCHAR(5000) NULL, -- 내용
+	PNO      INTEGER       NULL, -- 게시물번호
+	UID      INTEGER       NULL  -- 유저ID
+);
+
 
 -- 금융상품상세
 CREATE TABLE PRODUCT (
@@ -37,21 +40,21 @@ CREATE TABLE PRODUCT (
 
 -- 좋아요
 CREATE TABLE LIKEs (
-	UID      VARCHAR(255)  NOT NULL, -- 유저ID
+	UID      INTEGER  NOT NULL, -- 유저ID
 	contents VARCHAR(5000) NULL,     -- 내용
-	PNO      VARCHAR(255)  NOT NULL  -- 게시물번호
+	PNO      INTEGER  NOT NULL  -- 게시물번호
 );
 
 -- 계좌 정보
 CREATE TABLE ACCOUNT (
 	ANO  VARCHAR(255) NOT NULL, -- 계좌번호
 	bank VARCHAR(255) NULL,     -- 은행
-	UID  VARCHAR(255) NOT NULL  -- 유저ID
+	UID  INTEGER NOT NULL  -- 유저ID
 );
 
 -- 유저
 CREATE TABLE USER (
-	UID      VARCHAR(255) NOT NULL, -- 유저ID
+	UID      INTEGER NOT NULL auto_increment primary key, -- 유저ID
 	email    VARCHAR(255) NOT NULL, -- ID
 	password VARCHAR(255) NOT NULL,  -- 비밀번호
 	hashtag  VARCHAR(255),
@@ -61,14 +64,6 @@ CREATE TABLE USER (
     accessToken VARCHAR(255),
     refreshToken VARCHAR(255)
 );
-
--- 유저
-ALTER TABLE USER
-	ADD
-		CONSTRAINT PK_USER -- 유저 기본키
-		PRIMARY KEY (
-			UID -- 유저ID
-		);
 
 -- 게시물
 ALTER TABLE POST
@@ -107,6 +102,29 @@ ALTER TABLE LIKEs
 ALTER TABLE ACCOUNT
 	ADD
 		CONSTRAINT FK_USER_TO_ACCOUNT -- 유저 -> 계좌 정보
+		FOREIGN KEY (
+			UID -- 유저ID
+		)
+		REFERENCES USER ( -- 유저
+			UID -- 유저ID
+		);
+        
+        
+-- 댓글
+ALTER TABLE Reply
+	ADD
+		CONSTRAINT FK_POST_TO_Reply -- 게시물 -> 댓글
+		FOREIGN KEY (
+			PNO -- 게시물번호
+		)
+		REFERENCES POST ( -- 게시물
+			PNO -- 게시물번호
+		);
+
+-- 댓글
+ALTER TABLE Reply
+	ADD
+		CONSTRAINT FK_USER_TO_Reply -- 유저 -> 댓글
 		FOREIGN KEY (
 			UID -- 유저ID
 		)
