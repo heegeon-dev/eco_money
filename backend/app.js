@@ -40,6 +40,7 @@ var joinRouter = require('./routes/join');
 var likeRouter = require('./routes/like');
 var postRouter = require('./routes/post');
 var logoutRouter = require('./routes/logout');
+var replyRouter = require('./routes/reply');
 
 var testRouter = require('./routes/test');
 
@@ -51,6 +52,7 @@ app.use('/like',likeRouter);
 app.use('/post',postRouter);
 app.use('/logout',logoutRouter);
 app.use('/login',loginRouter);
+app.use('/reply',replyRouter);
 
 var con = mysql.createConnection({
   host     : db.host,
