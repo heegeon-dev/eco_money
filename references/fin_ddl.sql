@@ -57,6 +57,7 @@ CREATE TABLE USER (
 	UID      INTEGER NOT NULL auto_increment primary key, -- 유저ID
 	email    VARCHAR(255) NOT NULL, -- ID
 	password VARCHAR(255) NOT NULL,  -- 비밀번호
+    nickname varchar(255),
 	hashtag  VARCHAR(255),
     phashtag varchar(255),
     goal	 VARCHAR(255),
