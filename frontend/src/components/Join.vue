@@ -14,6 +14,7 @@
     
         <button v-on:click="loginSubmit">회원가입</button>
         <button type="button" class="cancelbtn" v-on:click="moveToLogin">돌아가기</button>
+        <button type="button" class="authbtn" v-on:click="moveToAuth">인증</button>
     </div>
 </template>
 <script>
@@ -95,6 +96,19 @@ export default {
     },
     moveToLogin: function() {
         this.$router.push("/")
+    },
+    moveToAuth: function() {
+      //인증URL 추가예정
+      axios.post(`http://127.0.0.1:3000/`, 
+        { 
+        }).then(
+            (response) => { 
+                if(response.data == "my key!"){
+                    this.$router.push("/MainContent")
+                }
+            },
+            (error) => { console.log(error) }
+        )
     }
   }
 }

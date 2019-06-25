@@ -71,6 +71,7 @@ import 'c3/c3.min.css'
 import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
 import {ko} from 'vuejs-datepicker/dist/locale'
+import axios from 'axios'
 
 export default {
   name: 'privatepage',
@@ -231,9 +232,26 @@ export default {
       //   this.getStampStatics()
       //   this.initGraph()
       // }
+    },
+    GetUserdata: function(){
+        axios.post(`http://127.0.0.1:3000/main`, 
+        { 
+          //파라미터추가
+        }).then(
+            (response) => { 
+              console.log(response)
+              },
+            (error) => { console.log(error) }
+            // res=> {
+            //     console.log(res)
+            //     this.$router.push("/MainContent")
+            // }
+        )
     }
   },
   created () {
+    //데이터 호출
+    this.GetUserdata()
     //테스트데이터
     this.graphdataList = ['30%','20%']
 
