@@ -25,6 +25,7 @@ CREATE TABLE POST (
 
 -- 댓글
 CREATE TABLE Reply (
+	RID		 integer	primary key auto_increment,
 	contents VARCHAR(5000) NULL, -- 내용
 	PNO      INTEGER       NULL, -- 게시물번호
 	UID      INTEGER       NULL  -- 유저ID
@@ -35,11 +36,12 @@ CREATE TABLE Reply (
 CREATE TABLE PRODUCT (
 	PNAME VARCHAR(1023) NOT NULL, -- 상품명
 	date  DATE          NULL,     -- 상품등록일
-	code  VARCHAR(255)  NULL      -- 상품코드
+	code  VARCHAR(255)  primary key     -- 상품코드
 );
 
 -- 좋아요
 CREATE TABLE LIKEs (
+	LNO		 INTEGER primary key auto_increment,
 	UID      INTEGER  NOT NULL, -- 유저ID
 	contents VARCHAR(5000) NULL,     -- 내용
 	PNO      INTEGER  NOT NULL  -- 게시물번호

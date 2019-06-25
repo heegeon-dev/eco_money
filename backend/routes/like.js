@@ -1,6 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+var mysql = require('mysql');
+var db = require('../db-config.json');                                                                    
+
+
+
+var con = mysql.createConnection({
+  host     : db.host,
+  user     :  db.user,
+  password : db.password,
+  database : db.database
+})
+
 /* GET users listing. */
 router.get("/",function(){
     console.log(req.query.pid);
