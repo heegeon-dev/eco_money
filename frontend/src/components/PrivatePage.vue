@@ -1,19 +1,33 @@
 <template>
   <div class="userdata">
     <div id="btn_group">
-        <button id="btn" v-on:click=setTerm(1)>1개월</button>
+        <button id="btn" name="btn" v-on:click=setTerm(1)>1개월</button>
         <button id="btn" v-on:click=setTerm(3)>3개월</button>
         <button id="btn" v-on:click=setTerm(6)>6개월</button>
         <button id="btn" v-on:click=setTerm(12)>12개월</button>
-        <!-- <button  v-on:click=setTerm(99)>조건검색</button> -->
-        <div id="search">
+        <button id="btn" v-on:click=setTerm(99)>조건검색</button>
+        <!-- <div id="search">
           <date-range-picker id="calendar" v-model="range" :options="options" placeholder/>
-        </div>
+        </div> -->
         <!-- <v-range-selector :start-date.sync="range.start" :end-date.sync="range.end"/> -->
         <!-- <datepicker placeholder="조건검색"></datepicker> -->
     </div>
+    <div class="datepicker" v-if=showDatePicker>
+      <div class="datepicker-group">
+        <datepicker v-model="termfrom" :format="setDateFormat" :language="ko" placeholder="시작일"></datepicker>
+      </div>
+      <div class="fromto">
+        ~
+      </div>
+      <div class="datepicker-group">
+        <datepicker v-model="termto" :format="setDateFormat" :language="ko" placeholder="종료일"></datepicker>
+      </div>
+      <div class="datepicker-group-btn">
+        <button type="button" class="btn btn-default btn-sm btn-login btn-info" @click="execSearch()">검색</button>
+      </div>
+    </div>
     <div id="termandonoff">
-      <div class="term">
+      <div class="term" v-if=!showDatePicker>
         <input class="termfromto" type="text" v-model="termfrom">
         ~
         <input class="termfromto" type="text" v-model="termto">
@@ -55,11 +69,14 @@ import Vue from 'vue'
 import VueC3 from 'vue-c3'
 import 'c3/c3.min.css'
 import moment from 'moment'
+import Datepicker from 'vuejs-datepicker'
+import {ko} from 'vuejs-datepicker/dist/locale'
 
 export default {
   name: 'privatepage',
   components:{
     VueC3,
+    'datepicker': Datepicker,
   },
   data () {
     return {
@@ -70,6 +87,7 @@ export default {
       search_term:"",
       termfrom:"",
       termto: "",
+      showDatePicker:false,
       myDataVariable:true,
       incomeitems: {
        '20%' : '주식회사ㅇㅇ 4,000,000원',
@@ -81,7 +99,6 @@ export default {
        '40%': 'ㅇㅇ투자상품 1,100,000원',
        '20%': '적금상품 800,000원',
       },
-      range: ["", ""],
       options: {
         timePicker: false,
         // startDate: moment().startOf('day'),
@@ -90,7 +107,8 @@ export default {
           format: 'YYYY/MM/DD'
         }
       },
-      asset:"1,000,000"
+      asset:"1,000,000",
+      ko:ko
     }
   },
   methods: {
@@ -174,34 +192,53 @@ export default {
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
+        this.showDatePicker = false
       }
       else if(value == 3)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(3, 'month').format('YYYY/MM/DD')
+        this.showDatePicker = false
       } 
       else if(value == 6)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(6, 'month').format('YYYY/MM/DD')
+        this.showDatePicker = false
       }
       else if(value == 12)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(12, 'month').format('YYYY/MM/DD')
+        this.showDatePicker = false
       } 
       else if(value == 99)
       {
         this.search_term = value
-        this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
+        this.showDatePicker = true
       }
+    },
+    setDateFormat(date){
+      return moment(date).format('YYYY/MM/DD')
+    },
+    execSearch: function(){
+      this.termto = moment(this.termto).format('YYYY/MM/DD')
+      this.termfrom = moment(this.termfrom).format('YYYY/MM/DD')
+      console.log("Termsearch")
+      // if(this.validation()){
+      //   this.getStampRallyInfo()
+      //   this.getStampRallyInfo()
+      //   this.getStampStatics()
+      //   this.initGraph()
+      // }
     }
   },
   created () {
     //테스트데이터
     this.graphdataList = ['30%','20%']
-    
+
     //기간표시 초기값
+    this.setTerm(1)
     this.termto = moment(new Date).format('YYYY/MM/DD')
     this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
   },
@@ -232,6 +269,27 @@ a {
 p{
   margin-top: 3%;
 }
+.vdp-datepicker {
+  text-align: center;
+  width: 39%;
+  float: left;
+}
+.datepicker-group{
+  width: 25%;
+  float: left;
+  text-align: center;
+  padding-left: 1%;
+}
+.datepicker-group-btn{
+  width: 10%;
+  float: left;
+  padding-left:4px;
+}
+.fromto{
+  width: 10%;
+  float: left;
+  text-align: center;
+}
 #available p {
   width: 100%;
   font-size: 21px;
@@ -257,7 +315,7 @@ label{
   font-size: 9px;
 }
 .toggle{
-  width: 42%;
+  width: 28%;
   text-align: right;
   float: left;
 }
@@ -290,7 +348,7 @@ label{
   padding: 5px;
   margin-bottom: 2%;
 }
-#btn:active, #btn:visited, #btn:hover{
+#btn:active, #btn:focus, #btn:hover #btn:visited{
   color:white;
   background-color: #fcaf17;
 }

@@ -7,7 +7,7 @@
     <p><u>#자동차대출</u></p>
     <p><u>#적금상품</u></p>
     <p><u>#펀드상품</u></p>
-    <button>더보기</button>
+    <button v-on:click="showList">더보기</button>
     <img src = "../../../assets/bell.svg">
     <img src = "../../../assets/icon.svg">
   </header>
@@ -25,6 +25,15 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      searchItem:[]
+    }
+  },
+  methods: {
+    showList: function () {
+    },
+  }
 };
 </script>
 <style>
@@ -80,4 +89,5 @@ button{
     margin-top: 1%;
     margin-left: 1%;
 }
+
 </style>
