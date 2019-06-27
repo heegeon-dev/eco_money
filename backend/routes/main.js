@@ -15,8 +15,8 @@ var con = mysql.createConnection({
 router.post('/', function (req, response) {
 
     console.log(req.session);
-    var uid = req.session.user.uid;
     if(req.session.user){
+    var uid = req.session.user.uid;
     // var uid = '1';
     var accessToken;
     var today = new Date();
@@ -195,7 +195,7 @@ router.post('/', function (req, response) {
 
     })
     }else{
-        res.send("no");
+        response.send("no");
     }
 })
 

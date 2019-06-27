@@ -20,6 +20,7 @@ router.post("/", function (req, res, next) {
     
     } else {
       // 로그인이 되어 있지 않을 경우 (로그인동작)
+      console.log("세션만들자!");
       var userEmail = req.body.email;
       var userPassword = req.body.password;
       console.log("user email, password : " +userEmail+ ", " + userPassword);
@@ -36,6 +37,7 @@ router.post("/", function (req, res, next) {
                 nickname : results[0].nickname,
                 email: userEmail,
             };
+            console.log("세션저장완료");
             res.send('login!');
           }else {
               res.json('incorrect password');
