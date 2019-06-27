@@ -125,7 +125,7 @@ export default {
           ],
           colors: ['#0080ff', '#03A6FF', '#1EC0FF', '#A3DAFF', '#d3e0f7'],
           // jason:[
-          //   this.graphdataList
+          //   this.incomeitems
           // ],
           label:{
             color:'#ffffff',
@@ -162,7 +162,7 @@ export default {
           ],
           colors: ['#0080ff', '#03A6FF', '#1EC0FF', '#A3DAFF', '#d3e0f7'],
           // jason:[
-          //   this.graphdataList
+          //   this.expenditureitems
           // ],
           label:{
             color:'#ffffff',
@@ -233,31 +233,25 @@ export default {
       //   this.initGraph()
       // }
     },
-    GetUserdata: function(){
-      var termto = moment(this.termto).format('YYYYMMDD')
-      var termfrom = moment(this.termfrom).format('YYYYMMDD')
-      console.log("termto",termto)
-      console.log("termfrom",termfrom)
-        axios.get(`http://127.0.0.1:3000/main`, 
+    GetUserMonthData: function(){
+      // var termto = moment(this.termto).format('YYYYMMDD')
+      // var termfrom = moment(this.termfrom).format('YYYYMMDD')
+        axios.post(`http://127.0.0.1:3000/main`, 
         { 
           //파라미터추가
-          fromdate: termfrom,
-          todate: termto,
+          // fromdate: termfrom,
+          // todate: termto,
         }).then(
             (response) => { 
               console.log(response)
-              },
+              // this.incomeitems = response.data.income
+              // this.expenditureitems = response.data.spending
+            },
             (error) => { console.log(error) }
-            // res=> {
-            //     console.log(res)
-            //     this.$router.push("/MainContent")
-            // }
         )
     }
   },
   created () {
-    //데이터 호출
-    this.GetUserdata()
     //테스트데이터
     this.graphdataList = ['30%','20%']
 
@@ -265,11 +259,15 @@ export default {
     this.setTerm(1)
     this.termto = moment(new Date).format('YYYY/MM/DD')
     this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
+    //데이터 호출
+    
   },
   mounted () {
     //그래프 값 변화시 표시
     this.showIncomeGraph()
     this.showExpenditureGraph()
+
+    this.GetUserMonthData()
   }
 }
 </script>

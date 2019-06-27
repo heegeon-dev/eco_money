@@ -81,6 +81,7 @@ export default {
       addHashInput:false,
       searchItem:[],
       keyword:"",
+      userDataList:[]
     }
   },
   methods: {
@@ -132,9 +133,25 @@ export default {
       }
       this.$store.commit('auth/setSearchText', this.keyword)
       this.ChangeTab(2)
+    },
+    GetUserData: function () {
+      axios.get(`http://127.0.0.1:3000/side`, 
+        {
+          //파라미터
+        }).then(
+            (response) => { 
+                this.userDataList = response.data
+                // this.hashList = response.data.phashtag
+                // this.userHashList = response.data.hashtag
+                // this.userGoal = response.data.goal
+                console.log(this.userDataList)
+            },
+            (error) => { console.log(error) }
+        )
     }
   },
   created(){
+    this.GetUserData()
   }
 }
 </script>
