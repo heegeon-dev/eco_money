@@ -12,13 +12,14 @@
               <figcaption id="user_id">UserName</figcaption>
              </figure>
             </div>
-            <div class="grid_item" style="width:64%;">
-              <textarea id="write" style="width:90%; margin-top:5%;"
+            <div class="grid_item" style="width: 75%;">
+              <textarea id="write"
                 placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 남겨보세요." >
               </textarea>  
             </div>
             <div class="grid_item">
-              <button type="submit" class="btn btn-success" style="margin-top:50%">공유하기</button>
+              <button type="submit" class="btn btn-success" style="margin-top:50%; width: auto; font-size: larger;
+                  font-weight: bold;">공유하기</button>
             </div>
            </div>
         </slot>
@@ -93,10 +94,10 @@ a {
 }
 
 .grid {
-        width: 500px;
-        margin: 0 auto;
-        overflow: hidden; 
-        display: inline-block;
+    width: 500px;
+    margin: auto;
+    overflow: hidden;
+    display: list-item;
 }
 .grid_item {
         float: left;
@@ -125,6 +126,8 @@ div#user_data{
 
 textarea#write{
   border: none;
+  width: 90%;
+  margin-top: 6%;
 }
 
 header#show-modal{
