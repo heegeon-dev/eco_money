@@ -3,77 +3,77 @@
     <div class="modal">
       <header class="modal-header">
         <slot name="header">
-            <div id="user_data">
-              <img id="user_img" src="../assets/3.png"/>
-              <p id="user_id">UserName</p>
-              <div id="tag_group">
-                <p id="user_hash">#연봉0000</p>
-                <p id="user_hash">#행복대출</p>
-                <p id="user_hash">#3년적금</p>
-                <p id="user_hash">#자동차대출</p>
-                <p id="user_hash">#포르쉐</p>
-                <p id="user_hash">#반포자이</p>
+          <div id="user_data">
+            <img id="user_img" src="../assets/3.png">
+            <p id="user_id">UserName</p>
+
+            <div id="tag_group">
+              <p id="user_hash">#연봉0000</p>
+              <p id="user_hash">#행복대출</p>
+              <p id="user_hash">#3년적금</p>
+              <p id="user_hash">#자동차대출</p>
+              <p id="user_hash">#포르쉐</p>
+              <p id="user_hash">#반포자이</p>
+            </div>
+          </div>
+           <textarea
+            id="write"
+            style="width:95%; heigth:80%"
+            placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
+          ></textarea>
+          <div class="userdata">
+            <div id="btn_group">
+              <button id="btn" v-on:click="setTerm(1)">1개월</button>
+              <button id="btn" v-on:click="setTerm(3)">3개월</button>
+              <button id="btn" v-on:click="setTerm(6)">6개월</button>
+              <button id="btn" v-on:click="setTerm(12)">12개월</button>
+              <button v-on:click="setTerm(99)"
+              style="margin-left: 15%;">조건검색</button>
+              </div>
+            <div id="termandonoff">
+              <div class="term">
+                <input class="termfromto" type="text" v-model="termfrom">
+                ~
+                <input class="termfromto" type="text" v-model="termto">
+              </div>
+    
+              <div class="toggle">
+                <span>상세금액 표기</span>
+                <toggle-button v-model="myDataVariable" color="#fcaf17"/>
               </div>
             </div>
+          </div>
+
+
+          
         </slot>
       </header>
       <section class="modal-body">
-        <slot name="body">
-        <textarea id="write" style="width:95%; heigth:80%"
-        placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 남겨보세요." >
-        </textarea>
-        <div class="userdata">
-          <div id="btn_group">
-              <button id="btn" v-on:click=setTerm(1)>1개월</button>
-              <button id="btn" v-on:click=setTerm(3)>3개월</button>
-              <button id="btn" v-on:click=setTerm(6)>6개월</button>
-              <button id="btn" v-on:click=setTerm(12)>12개월</button>
-              <!-- <button  v-on:click=setTerm(99)>조건검색</button> -->
-              <div id="search">
-                <date-range-picker id="calendar" v-model="range" :options="options" placeholder/>
+        
+             <div id="graph">
+              <div id="Piegraph">
+                <vue-c3 :handler="handler"></vue-c3>
+                <p id="title">수입</p>
               </div>
-              <!-- <v-range-selector :start-date.sync="range.start" :end-date.sync="range.end"/> -->
-              <!-- <datepicker placeholder="조건검색"></datepicker> -->
-          </div>
-          <div id="termandonoff">
-            <div class="term">
-              <input class="termfromto" type="text" v-model="termfrom">
-              ~
-              <input class="termfromto" type="text" v-model="termto">
-            </div>
-          </div>
-          <div id="available">
-            <p>예상 한달 가용 자산 : {{ asset }} 원</p>
-          </div>
-          <div id="graph">
-            <div id="Piegraph">
-              <vue-c3 :handler="handler"></vue-c3>
-              <p id="title">수입</p>
-            </div>
-            <div id="graphdetails">
-              <div v-for="(value, key) in incomeitems" v-bind:key="key">
-                수입 {{ key }} : {{ value }}
+              <div id="graphdetails">
+                <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
               </div>
             </div>
-          </div>
-          <div id="graph">
-            <div id="Piegraph">
-              <vue-c3 :handler="ExpenditureHandler"></vue-c3>
-              <p id="title">지출</p>
-            </div>
-            <div id="graphdetails">
-              <div v-for="(value, key) in incomeitems" v-bind:key="key">
-                수입 {{ key }} : {{ value }}
+            <div id="graph">
+              <div id="Piegraph">
+                <vue-c3 :handler="ExpenditureHandler"></vue-c3>
+                <p id="title">지출</p>
+              </div>
+              <div id="graphdetails">
+                <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
               </div>
             </div>
-          </div>
-        </div>  
-        </slot>
-       </section>
-       <footer class="modal-footer">
+      </section>
+
+      <footer class="modal-footer">
         <slot name="footer">
-          <button type="submit" class="btn btn-success" style="margin-top:40px">공유하기</button>
-          <button type="button" class="btn-green" style="margin-top:40px" @click="close">취소</button>
+          <button type="submit" class="btn btn-success" >공유하기</button>
+          <button type="button" class="btn-green"  @click="close">취소</button>
         </slot>
       </footer>
     </div>
@@ -81,39 +81,39 @@
 </template>
 <script>
 // 프라이빗 따옴
-import Vue from 'vue'
-import VueC3 from 'vue-c3'
-import Datepicker from 'vuejs-datepicker'
-import {ko} from 'vuejs-datepicker/dist/locale'
-import 'c3/c3.min.css'
-import moment from 'moment'
-
+import Vue from "vue";
+import VueC3 from "vue-c3";
+import Datepicker from "vuejs-datepicker";
+import { ko } from "vuejs-datepicker/dist/locale";
+import "c3/c3.min.css";
+import moment from "moment";
 
 export default {
-  name: 'modal',
-  components:{
+  name: "modal",
+  components: {
     VueC3,
-    'datepicker': Datepicker,
+    datepicker: Datepicker
   },
-  data () {
+
+  data() {
     return {
-      msg: 'wwww',
+      msg: "wwww",
       handler: new Vue(),
       ExpenditureHandler: new Vue(),
-      graphdataList:[],
-      search_term:"",
-      termfrom:"",
+      graphdataList: [],
+      search_term: "",
+      termfrom: "",
       termto: "",
-      myDataVariable:true,
+      myDataVariable: true,
       incomeitems: {
-       '20%' : '주식회사ㅇㅇ 4,000,000원',
-       '40%': 'ㅇㅇ투자상품 1,100,000원',
-       '20%': '적금상품 800,000원',
+        "20%": "주식회사ㅇㅇ 4,000,000원",
+        "40%": "ㅇㅇ투자상품 1,100,000원",
+        "20%": "적금상품 800,000원"
       },
       expenditureitems: {
-       '20%' : '주식회사ㅇㅇ 4,000,000원',
-       '40%': 'ㅇㅇ투자상품 1,100,000원',
-       '20%': '적금상품 800,000원',
+        "20%": "주식회사ㅇㅇ 4,000,000원",
+        "40%": "ㅇㅇ투자상품 1,100,000원",
+        "20%": "적금상품 800,000원"
       },
       range: ["", ""],
       options: {
@@ -121,200 +121,211 @@ export default {
         // startDate: moment().startOf('day'),
         // endDate: moment().startOf('day'),
         locale: {
-          format: 'YYYY/MM/DD'
+          format: "YYYY/MM/DD"
         }
       },
-      asset:"1,000,000"
-    }
+      asset: "1,000,000"
+    };
   },
   methods: {
     close() {
-      this.$emit('close');
+      this.$emit("close");
     },
     showIncomeGraph: function() {
       let options = {
-        data:{
-          type:'donut',
+        data: {
+          type: "donut",
           columns: [
-            ['Office', 20],
-            ['Work', 30],
-            ['School', 40],
-            ['Water', 50]
+            ["Office", 20],
+            ["Work", 30],
+            ["School", 40],
+            ["Water", 50]
           ],
-          colors: ['#0080ff', '#03A6FF', '#1EC0FF', '#A3DAFF', '#d3e0f7'],
+          colors: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"],
           // jason:[
           //   this.graphdataList
           // ],
-          label:{
-            color:'#ffffff',
-            position: 'start',
-            format: function(v, id, i, j){ return v + "%"},
+          label: {
+            color: "#ffffff",
+            position: "start",
+            format: function(v, id, i, j) {
+              return v + "%";
+            }
           },
           keys: {
-            value :['Man','Woman']
+            value: ["Man", "Woman"]
           },
-          groups: [
-            ['Man','Woman']
-          ],
+          groups: [["Man", "Woman"]],
           names: {
-            Man : "남자",
-            Woman : "여자"
+            Man: "남자",
+            Woman: "여자"
           }
         },
-        legend:{
+        legend: {
           //position:'right'
           show: false
         }
-      }
-      this.handler.$emit('init', options)
+      };
+      this.handler.$emit("init", options);
     },
     showExpenditureGraph: function() {
       let options = {
-        data:{
-          type:'donut',
+        data: {
+          type: "donut",
           columns: [
-            ['Office', 20],
-            ['Work', 30],
-            ['School', 40],
-            ['Water', 50]
+            ["Office", 20],
+            ["Work", 30],
+            ["School", 40],
+            ["Water", 50]
           ],
-          colors: ['#0080ff', '#03A6FF', '#1EC0FF', '#A3DAFF', '#d3e0f7'],
+          colors: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"],
           // jason:[
           //   this.graphdataList
           // ],
-          label:{
-            color:'#ffffff',
-            position: 'start',
-            format: function(v, id, i, j){ return v + "%"},
+          label: {
+            color: "#ffffff",
+            position: "start",
+            format: function(v, id, i, j) {
+              return v + "%";
+            }
           },
           keys: {
-            value :['Man','Woman']
+            value: ["Man", "Woman"]
           },
-          groups: [
-            ['Man','Woman']
-          ],
+          groups: [["Man", "Woman"]],
           names: {
-            Man : "남자",
-            Woman : "여자"
+            Man: "남자",
+            Woman: "여자"
           }
         },
-        legend:{
+        legend: {
           //position:'right'
           show: false
         }
-      }
-      this.ExpenditureHandler.$emit('init', options)
+      };
+      this.ExpenditureHandler.$emit("init", options);
     },
     //개월수 탭했을때
-    setTerm: function(value){
-      if(value == 1)
-      {
-        this.search_term = value
-        this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
-      }
-      else if(value == 3)
-      {
-        this.search_term = value
-        this.termfrom = moment(this.termto).subtract(3, 'month').format('YYYY/MM/DD')
-      } 
-      else if(value == 6)
-      {
-        this.search_term = value
-        this.termfrom = moment(this.termto).subtract(6, 'month').format('YYYY/MM/DD')
-      }
-      else if(value == 12)
-      {
-        this.search_term = value
-        this.termfrom = moment(this.termto).subtract(12, 'month').format('YYYY/MM/DD')
-      } 
-      else if(value == 99)
-      {
-        this.search_term = value
-        this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
+    setTerm: function(value) {
+      if (value == 1) {
+        this.search_term = value;
+        this.termfrom = moment(this.termto)
+          .subtract(1, "month")
+          .format("YYYY/MM/DD");
+      } else if (value == 3) {
+        this.search_term = value;
+        this.termfrom = moment(this.termto)
+          .subtract(3, "month")
+          .format("YYYY/MM/DD");
+      } else if (value == 6) {
+        this.search_term = value;
+        this.termfrom = moment(this.termto)
+          .subtract(6, "month")
+          .format("YYYY/MM/DD");
+      } else if (value == 12) {
+        this.search_term = value;
+        this.termfrom = moment(this.termto)
+          .subtract(12, "month")
+          .format("YYYY/MM/DD");
+      } else if (value == 99) {
+        this.search_term = value;
+        this.termfrom = moment(this.termto)
+          .subtract(1, "month")
+          .format("YYYY/MM/DD");
       }
     }
   },
-  created () {
+  created() {
     //테스트데이터
-    this.graphdataList = ['30%','20%']
-    
+    this.graphdataList = ["30%", "20%"];
+
     //기간표시 초기값
-    this.termto = moment(new Date).format('YYYY/MM/DD')
-    this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
+    write_date.termto = moment(new Date()).format("YYYY/MM/DD");
+    this.termto = moment(new Date()).format("YYYY/MM/DD");
+    this.termfrom = moment(this.termto)
+      .subtract(1, "month")
+      .format("YYYY/MM/DD");
   },
-  mounted () {
+  mounted() {
     //그래프 값 변화시 표시
-    this.showIncomeGraph()
-    this.showExpenditureGraph()
+    this.showIncomeGraph();
+    this.showExpenditureGraph();
   }
-}
+};
 </script>
 <style scoped>
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal {
-    background: #FFFFFF;
-    box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    height: 60%;
-    position: fixed;
-    top: 10%;
-    left: 33%;
+  background: #ffffff;
+  box-shadow: 2px 2px 20px 1px;
+  /* overflow-x: auto; */
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: auto;
+  position: fixed;
+  top: 2%;
+  left: 30%;
+
 }
 
-.modal-header,
+
 .modal-footer {
-    padding: 15px;
-    display: flex;
+  padding: 5px;
+  display: flex;
 }
 
 .modal-header {
-    border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
-    justify-content: space-between;
+  border-bottom: 1px solid #eeeeee;
+  color: #4aae9b;
+  justify-content: space-between;
+  padding: 15px;
+  display: list-item;
 }
 
 .modal-footer {
-    border-top: 1px solid #eeeeee;
-    justify-content: flex-end;
+  border-top: 1px solid #eeeeee;
+  justify-content: flex-end;
 }
 
 .modal-body {
-    position: relative;
-    padding: 20px 10px;
+  position: relative;
+  padding: 1px 10px;
+  /* overflow: scroll; */
+  height: 50%;
+  overflow: scroll;
 }
 
 .btn-close {
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4AAE9B;
-    background: transparent;
+  border: none;
+  font-size: 20px;
+  padding: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #4aae9b;
+  background: transparent;
 }
 
 .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
+  color: white;
+  background: #4aae9b;
+  border: 1px solid #4aae9b;
+  border-radius: 2px;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -328,7 +339,7 @@ li {
 a {
   color: #42b983;
 }
-p{
+p {
   margin-top: 3%;
 }
 #available p {
@@ -337,11 +348,11 @@ p{
   text-align: center;
   color: #fcaf17;
 }
-input#calendar{
+input#calendar {
   border-radius: 6px;
   margin-top: 11%;
 }
-.term{
+.term {
   width: 50%;
   float: left;
   margin-right: 35px;
@@ -352,52 +363,54 @@ div#search {
   float: left;
   margin-left: 2%;
 }
-label{
+label {
   font-size: 9px;
 }
-.toggle{
+.toggle {
   width: 42%;
   text-align: right;
   float: left;
+  margin-left: 11%;
 }
-.toggle span{
+.toggle span {
   font-size: 9px;
   font-weight: 100;
   margin-right: 2%;
 }
 .termfromto {
   width: 30%;
-  border:none;
+  border: none;
   margin-left: 2%;
 }
-.user_data{
-   box-shadow: 0px 0px 0px 1px grey;
+.user_data {
+  box-shadow: 0px 0px 0px 1px grey;
+  width: -webkit-fill-available;
 }
-#btn{
+#btn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  margin-right:-4px;
   float: left;
   width: 15%;
 }
-#btn_group button{
+#btn_group button {
   border: 1px solid #b9bec0;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   color: rgb(74, 76, 77);
   padding: 5px;
   margin-bottom: 2%;
 }
-#btn:active, #btn:visited, #btn:hover{
-  color:white;
+#btn:active,
+#btn:visited,
+#btn:hover {
+  color: white;
   background-color: #fcaf17;
 }
-#Piegraph{
+#Piegraph {
   position: relative;
-  width: 52%;
+  
   float: left;
-  margin-top: 2%;
 }
 #graphdetails {
   width: 35%;
@@ -405,7 +418,7 @@ label{
   font-size: 0.8em;
   margin-top: 2%;
 }
-#title{
+#title {
   position: absolute;
   font-size: 1.5rem;
   top: 45%;
@@ -414,7 +427,55 @@ label{
   float: left;
 }
 
-div#tag_group{
+div#tag_group {
   float: left;
+  font-size: large;
+  width: 50%;
+  margin-left: 15%;
+}
+textarea#write {
+  width: 100%;
+  height: 20%;
+  font-size: larger;
+  margin-bottom: 3%;
+}
+
+p#user_id {
+  font-size: large;
+  font-weight: bolder;
+  width: 5%;
+}
+
+
+.toggle{
+  width: 28%;
+  text-align: right;
+  float: left;
+}
+.toggle span{
+  font-size: 9px;
+  font-weight: 100;
+  margin-right: 2%;
+}
+
+.userdata{
+  overflow: scroll;
+}
+
+.btn-success{
+    width: 70%;
+    height: 100%;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.btn-green {
+    margin-right: 5%;
+    height: 100%;
+    margin-top: 5px;
+    width: 20%;
+    font-size: initial;
 }
 </style>
