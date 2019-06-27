@@ -234,9 +234,15 @@ export default {
       // }
     },
     GetUserdata: function(){
-        axios.post(`http://127.0.0.1:3000/main`, 
+      var termto = moment(this.termto).format('YYYYMMDD')
+      var termfrom = moment(this.termfrom).format('YYYYMMDD')
+      console.log("termto",termto)
+      console.log("termfrom",termfrom)
+        axios.get(`http://127.0.0.1:3000/main`, 
         { 
           //파라미터추가
+          fromdate: termfrom,
+          todate: termto,
         }).then(
             (response) => { 
               console.log(response)

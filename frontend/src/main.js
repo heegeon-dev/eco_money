@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 // Layouts
 import Maincontent from '@/layouts/MainContent.vue'
-
+import store from './store'
 import Vuex from 'vuex'
 import axios from 'axios'
 import moment from 'moment'
@@ -29,6 +29,7 @@ Vue.use(VueMomentJS, moment)
 // Vue.prototype.$Http = axios
 Vue.$http = axios
 Vue.use(Vuex)
+Vue.use(store)
 
 Vue.component('maincontent-layout', Maincontent)
 Vue.config.productionTip = false
@@ -38,6 +39,7 @@ Vue.prototype.$eventHub = new Vue()
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
