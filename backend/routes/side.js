@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
     console.log("side 시작 !");
     // if (req.session.user) {
 
-    console.log(req.session.user);
+    console.log(req.body.uid);
 
     var sql = "SELECT * FROM user WHERE UID = ?";
 
