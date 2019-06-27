@@ -28,12 +28,12 @@ router.post("/", function (req, res, next) {
       con.query(sql, [userEmail], function (error, results) {
         if (error) throw error;  
         else {
-          console.log("db password : " + results[0].password);
+          console.log(results[0].UID);
           if(userPassword == results[0].password){
             req.session.user =
             {
-                uid : results.uid,
-                nickname : results.nickname,
+                uid : results[0].UID,
+                nickname : results[0].nickname,
                 email: userEmail,
             };
             res.send('login!');

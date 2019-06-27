@@ -41,10 +41,10 @@ var likeRouter = require('./routes/like');
 var postRouter = require('./routes/post');
 var logoutRouter = require('./routes/logout');
 var replyRouter = require('./routes/reply');
-
+var sideRouter = require('./routes/side');
 
 //api router
-var balanceRouter = require('./routes/balance');
+// var balanceRouter = require('./routes/balance');
 var mainRouter = require('./routes/main');
 var transaction_listRouter = require('./routes/transaction_list');
 var authResultRouter = require('./routes/authResult');
@@ -61,15 +61,15 @@ app.use('/post',postRouter);
 app.use('/logout',logoutRouter);
 app.use('/login',loginRouter);
 app.use('/reply',replyRouter);
-
+app.use('/side',sideRouter);
 //api 라우터 맵핑
 
-app.use('/balance',balanceRouter);   
+// app.use('/balance',balanceRouter);   
 app.use('/main', mainRouter);
 app.use('/transaction_list',transaction_listRouter);
 app.use('/authResult',authResultRouter);
 app.use('/auth',authRouter)
-app.use('/getUserTest', getUserTestRouter)
+// app.use('/getUserTest', getUserTestRouter)
 
 var con = mysql.createConnection({
   host     : db.host,
