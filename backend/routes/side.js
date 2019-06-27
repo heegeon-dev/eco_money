@@ -14,7 +14,8 @@ var con = mysql.createConnection({
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  if (req.session.user) {
+    console.log("side 시작 !");
+    // if (req.session.user) {
 
     console.log(req.session.user);
 
@@ -35,9 +36,9 @@ router.get('/', function(req, res, next) {
 
     })
 
-  }else{
-      res.send('NO');
-  }
+//   }else{
+//       res.send('NO');
+//   }
 });
 
 module.exports = router;

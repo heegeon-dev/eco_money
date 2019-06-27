@@ -14,11 +14,11 @@ var con = mysql.createConnection({
 router.post("/", function (req, res, next) {
     let body = req.body;
     
-    if (req.session.user) {
-      console.log('already login!');
-    // TODO 이미 로그인 되어 있을 경우          
+    // if (req.session.user) {
+    //   console.log('already login!');
+    // // TODO 이미 로그인 되어 있을 경우          
     
-    } else {
+    // } else {
       // 로그인이 되어 있지 않을 경우 (로그인동작)
       console.log("세션만들자!");
       var userEmail = req.body.email;
@@ -38,13 +38,13 @@ router.post("/", function (req, res, next) {
                 email: userEmail,
             };
             console.log("세션저장완료");
-            res.send('login!');
+            res.send(results[0].UID);
           }else {
               res.json('incorrect password');
           }
         }
       });
-    }
+    // }
     });
 
 

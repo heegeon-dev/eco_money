@@ -13,11 +13,12 @@ var con = mysql.createConnection({
 })
 // 사용자 계좌 조회
 router.post('/', function (req, response) {
-
-    console.log(req.session);
-    if(req.session.user){
-    var uid = req.session.user.uid;
-    // var uid = '1';
+    // console.log("main 시작 !");
+    // console.log(req.session);
+    // if(req.session.user){
+    // var uid = req.session.user.uid;
+    console.log(req.body);
+    var uid = req.body.uid;
     var accessToken;
     var today = new Date();
     var tod = today.getDate();
@@ -194,9 +195,9 @@ router.post('/', function (req, response) {
 
 
     })
-    }else{
-        response.send("no");
-    }
+    // }else{
+    //     response.send("no");
+    // }
 })
 
 module.exports = router;
