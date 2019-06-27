@@ -4,7 +4,7 @@
       <div id="write">
       <header class="write-header" id="show-modal" @click="showModal=true">
         <slot name="header">
-          <header id="write_tag">&nbsp&nbsp게시물 작성하기</header>
+          <header id="write_tag">게시물 작성하기</header>
            <div class="grid">
             <div class="grid_item" id="user_data">
              <figure>
@@ -43,6 +43,9 @@
 
 <script>
 import myModal from '../Modal/Modal.vue'
+import {
+  mapMutations, mapState
+} from 'vuex'
 
 export default {
   name: 'publicpage',
@@ -52,12 +55,22 @@ export default {
   data () {
     return {
       showModal:false,
+      search_text:"none"
     }
   },
   methods: {
     closeModal(){
       this.showModal = !this.showModal
     } 
+  },
+  created(){
+    console.log("this.$store.getters['auth/searchText'] ",this.$store.getters['auth/searchText'])
+    if(this.search_text !== "none"){
+       //검색시 키워드 파라미터로 전송하기
+      this.search_text = this.$store.getters['auth/searchText']
+    } else {
+      this.$store.commit('auth/setSearchText', "")
+    }
   }
 }
 </script>
