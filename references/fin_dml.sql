@@ -1,5 +1,5 @@
 -- user(uid,email,password,upicture,uname,apihashtag,inputhashtag,goal)
-insert into user(email,password,nickname,phashtag,hashtag,goal) values("user1@gmail.com","user1","user1","[국민은행] 국민수퍼정기예금(개인), [국민은행] KB Star 정기예금, [국민은행] 국민수퍼정기예금 (CD금리연동형), [국민은행] KB골든라이프연금저축신탁 (안정형, [국민은행] KB 매직카대출)",null,null);
+insert into user(email,password,nickname,phashtag,hashtag,goal) values("user1@gmail.com","user1","user1","#[국민은행] 국민수퍼정기예금(개인)#[국민은행] KB Star 정기예금#[국민은행] 국민수퍼정기예금 (CD금리연동형)#[국민은행] KB골든라이프연금저축신탁 (안정형), #[국민은행] KB 매직카대출)",null,null);
 insert into user(email,password,nickname,phashtag,hashtag,goal) values("user2@gmail.com","user2","user2","[국민은행] KB Smart★폰 예금, [국민은행] KB국민UP정기예금, [국민은행] KB 러시아 대표성장주 증권 자투자신탁(주식)-C-E, [국민은행] KB골든라이프연금저축신탁 (채권형), [국민은행] KB Star 신용대출",null,null);
 insert into user(email,password,nickname,phashtag,hashtag,goal) values("user3@gmail.com","user3","user3","[국민은행] KB국민첫재테크예금, [국민은행] KB골든라이프연금우대예금, [국민은행] KB실버웰빙연금저축신탁 (안정형), [국민은행] KB Star 모기지론",null,null);
 insert into user(email,password,nickname,phashtag,hashtag,goal) values("user4@gmail.com","user4","user4","[국민은행] KB펀드와만나는예금, [국민은행] 일반정기예금, [국민은행] DB 글로벌 핀테크 증권자투자신탁 UH(주식) AE, [국민은행] KB실버웰빙연금저축신탁 (채권형)",null,null);
