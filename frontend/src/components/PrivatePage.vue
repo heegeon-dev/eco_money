@@ -6,11 +6,6 @@
         <button id="btn" v-on:click=setTerm(6)>6개월</button>
         <button id="btn" v-on:click=setTerm(12)>12개월</button>
         <button id="btn" v-on:click=setTerm(99)>조건검색</button>
-        <!-- <div id="search">
-          <date-range-picker id="calendar" v-model="range" :options="options" placeholder/>
-        </div> -->
-        <!-- <v-range-selector :start-date.sync="range.start" :end-date.sync="range.end"/> -->
-        <!-- <datepicker placeholder="조건검색"></datepicker> -->
     </div>
     <div class="datepicker" v-if=showDatePicker>
       <div class="datepicker-group">
@@ -114,6 +109,15 @@ export default {
   },
   methods: {
     showIncomeGraph: function() {
+      //Jsondata 이름이랑 %출력
+      // var dataList = []
+      // for(var i =0; i < Object.keys(this.incomeitems).length; i++){
+      //   var rowData = []
+      //   rowData['income_amt'] = this.incomeitems[i].income_amt
+      //   rowData['income_keyword'] = this.incomeitems[i].income_keyword
+      //   dataList.push(rowData)
+      // }
+
       let options = {
         data:{
           type:'donut',
@@ -124,9 +128,7 @@ export default {
             ['Water', 50]
           ],
           colors: ['#0080ff', '#03A6FF', '#1EC0FF', '#A3DAFF', '#d3e0f7'],
-          // jason:[
-          //   this.incomeitems
-          // ],
+          // json: dataList,
           label:{
             color:'#ffffff',
             position: 'start',
@@ -225,7 +227,6 @@ export default {
     execSearch: function(){
       this.termto = moment(this.termto).format('YYYY/MM/DD')
       this.termfrom = moment(this.termfrom).format('YYYY/MM/DD')
-      console.log("Termsearch")
       // if(this.validation()){
       //   this.getStampRallyInfo()
       //   this.getStampRallyInfo()
@@ -236,7 +237,7 @@ export default {
     GetUserMonthData: function(){
       // var termto = moment(this.termto).format('YYYYMMDD')
       // var termfrom = moment(this.termfrom).format('YYYYMMDD')
-        axios.post(`http://127.0.0.1:3000/main`, 
+        axios.get(`http://127.0.0.1:3000/main`, 
         { 
           //파라미터추가
           // fromdate: termfrom,

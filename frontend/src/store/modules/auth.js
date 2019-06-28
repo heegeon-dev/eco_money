@@ -6,7 +6,8 @@ export default {
   namespaced: true,
   state: {
     searchText: '',
-    searchFlag: 0
+    searchFlag: 0,
+    uId: ''
   },
 
   getters: {
@@ -15,6 +16,9 @@ export default {
     },
     searchFlag: state => {
       return state.searchFlag
+    },
+    uId: state => {
+      return state.uId
     }
   },
 
@@ -27,6 +31,9 @@ export default {
     },
     ClearSearchText (state) {
       state.searchText = ''
+    },
+    uId (state, uId) {
+      state.uId = uId
     }
   },
   actions: {
