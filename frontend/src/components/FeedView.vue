@@ -66,28 +66,19 @@
             <span>
               <button>
                 <span>
-                  <img id="“feed-like”" src="../../../assets/like.png" aria-label="Like">
+                  <img id="“feed-like”" src="../assets/like.png" aria-label="Like">
                 </span>
               </button>
             </span>
             <span>
               <button>
-                <span
-                  img
-                  id="“feed-comment”"
-                  src="../../../assets/comment.png"
-                  aria-label="Comment"
-                ></span>
+                <span img id="“feed-comment”" src="../assets/comment.png" aria-label="Comment"></span>
               </button>
             </span>
             <span>
               <button>
                 <span>
-                  <img
-                    id="feed-bookmark"
-                    src="../../../assets/bookmark.png"
-                    aria-label="“Bookmark”"
-                  >
+                  <img id="feed-bookmark" src="../assets/bookmark.png" aria-label="“Bookmark”">
                 </span>
               </button>
             </span>

@@ -1,5 +1,16 @@
 <template>
     <div class="container">
+      <div class="title">
+        <button id="login">LOGIN</button>
+        <p>WELCOM TO SNF!!</p>
+        <br>
+        <p class="title-ex">SNF는 Social Network Financial의 약자로,<br>
+          금융 활동 내역을 공유하는 플랫폼 입니다.<br>
+          나의 금융 활동 내역을 다양한 사람들과 비교해 보세요.<br>
+        </p>
+        <button id="signup">SIGN UP</button>
+      </div>
+      <div class="login">
         <label for="uname"><b>이메일</b></label>
         <input type="text" placeholder="EMail" v-model="mail_address" required>
         <div v-if="errMailAddress" class="invalid-feedback">{{ errMsgMailAddress }}</div>
@@ -15,6 +26,7 @@
         <button v-on:click="loginSubmit">회원가입</button>
         <button type="button" class="cancelbtn" v-on:click="moveToLogin">돌아가기</button>
         <button type="button" class="authbtn" v-on:click="moveToAuth">인증</button>
+      </div>
     </div>
 </template>
 <script>
@@ -37,7 +49,6 @@ export default {
   },
   methods:{
     loginSubmit: function() {
-      console.log("회원가입")
       if (!this.chkValidation()) {
          return false
       } else {
@@ -125,5 +136,27 @@ export default {
 label {
     float: left;
     width: 55%;
+}
+.container{
+  max-width: 100%;
+  height: 100%;
+}
+.login {
+  float: left;
+  width: 50%;
+}
+.title {
+  float: left;
+  width: 50%;
+  background-color: #fcaf17;
+  color: #fff;
+}
+#login{
+  position: absolute;
+  right: 53%;
+}
+#signup{
+  position: absolute;
+  left:3%;
 }
 </style>

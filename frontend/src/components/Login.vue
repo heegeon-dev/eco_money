@@ -1,5 +1,16 @@
 <template>
     <div class="container">
+      <div class="title">
+        <button id="login">LOGIN</button>
+        <p>WELCOM TO SNF!!</p>
+        <br>
+        <p class="title-ex">SNF는 Social Network Financial의 약자로,<br>
+          금융 활동 내역을 공유하는 플랫폼 입니다.<br>
+          나의 금융 활동 내역을 다양한 사람들과 비교해 보세요.<br>
+        </p>
+        <button id="signup">SIGN UP</button>
+      </div>
+      <div class="login">
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" v-model="mail_address" required>
         <div v-if="errMailAddress" class="invalid-feedback">{{ errMsgMailAddress }}</div>
@@ -10,10 +21,14 @@
 
         <button v-on:click="loginSubmit">로그인</button>
         <button v-on:click=moveToJoin()>회원가입</button>
+      </div>
     </div>
 </template>
 <script>
 import axios from 'axios'
+import {
+  mapMutations, mapState
+} from 'vuex'
 
 export default {
   name: 'Login',
@@ -29,7 +44,6 @@ export default {
   },
   methods:{
     loginSubmit: function() {
-      console.log("로그인")
        if (!this.chkValidation()) {
          return false
       } else {
@@ -39,9 +53,13 @@ export default {
               password: this.password
           }).then(
               (response) => { 
-                if(response.data == "login!"){
-                    this.$router.push("/MainContent")
-                }
+                console.log("response",response)
+                this.$store.commit('auth/uId', response.data.UID)
+                console.log('auth/uId',this.$store.getters['auth/uId'])
+                // if(response.data.UID == "login!"){
+                //   this.$store.commit('auth/uId',response.data )
+                //   this.$router.push("/MainContent")
+                // }
                },
               (error) => { console.log(error) }
               // res=> {
@@ -91,8 +109,26 @@ export default {
   width: 55%;
   margin-left: 50%;
 }
-label {
-    float: left;
-    width: 55%;
+.container{
+  max-width: 100%;
+  height: 100%;
+}
+.login {
+  float: left;
+  width: 50%;
+}
+.title {
+  float: left;
+  width: 50%;
+  background-color: #fcaf17;
+  color: #fff;
+}
+#login{
+  position: absolute;
+  right: 53%;
+}
+#signup{
+  position: absolute;
+  left:3%;
 }
 </style>

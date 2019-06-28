@@ -3,16 +3,23 @@
     <header class="main-header">
       <div class='green_window'>
         <input type='text' class='input_text' v-model="keyword" placeholder="검색할 키워드를 입력하세요" />
-          <img src="../../../assets/search.svg" v-on:click="search" class='sch_smit'>
+          <img src="../../../assets/search.svg" v-on:click="search(keyword)" class='sch_smit'>
         <div class ="searchHash">            
-          <p><u>#자동차대출</u></p>
-          <p><u>#적금상품</u></p>
-          <p><u>#펀드상품</u></p>
-          <button v-on:click="showList">더보기</button>
+          <a v-on:click="search(tag1)"><u>#자동차대출</u></a>
+          <a v-on:click="search(tag2)"><u>#적금상품</u></a>
+          <a v-on:click="search(tag3)"><u>#펀드상품</u></a>
+          <select id='searchbtn' @change="chageLangSelect()">
+            <option value='' selected>더보기</option>
+            <option value="예금상품">예금상품</option>
+            <option value="담보/전세대출">담보/전세대출</option>
+            <option value="주택도시기금대출">주택도시기금대출</option>
+            <option value="신탁상품">신탁상품</option>
+            <option value="보험상품">보험상품</option>
+          </select>
         </div>
       </div>
-      <img src = "../../../assets/bell.svg">
-      <img src = "../../../assets/icon.svg">
+      <img id="btn-icon1" src = "../../../assets/bell.svg">
+      <img id="btn-icon2" src = "../../../assets/icon.svg">
       <button id="logout" v-on:click="Logout">로그아웃</button>
     </header>
     <tr>
@@ -33,12 +40,12 @@
               <div id="user_hash" v-for="hash in userHashList" v-bind:key="hash">
                 <p id="user_hash">#{{hash}}</p>
               </div>
-              <button id="addhashbtn" v-if="addHash" v-on:click=EditUserHash()>+</button>
-              <input v-if="addHashInput" type="text" id="addUserHash">
+              <img id="addhashbtn" v-if="addHash" v-on:click=EditUserHash() src="../../../assets/plus.png"/>
+              <input v-if="addHashInput" type="text" id="addUserHash" v-model="userHash">
               <div id="user_goal">
                 <span>목표자산:</span>
                 <input type="text" id="goal" v-model="userGoal" :readonly="shouldDisable">
-                <button v-if="editBtn" v-on:click=EditUserGoal()>수정</button>
+                <button id="edit-btn" v-if="editBtn" v-on:click=EditUserGoal()>수정</button>
               </div>
             </div>
           </li>
@@ -73,7 +80,8 @@ export default {
       userName:'test11',
       hashList:['ㅇㅇ적금','ㅇㅇ자동차대출','ㅇㅇ담보대출'],
       userHashList:['포르쉐','반포자이'],
-      userGoal:'2020년까지 5억모으기',
+      userHash:'',
+      userGoal:'',
       settingOn:false,
       editBtn:false,
       shouldDisable: true,
@@ -81,25 +89,32 @@ export default {
       addHashInput:false,
       searchItem:[],
       keyword:"",
-      userDataList:[]
+      userDataList:[],
+      tag1:"자동차대출",
+      tag2:"적금상품",
+      tag3:"펀드상품",
+      updateFlg:0
     }
   },
   methods: {
     ChangeTab: function (index) {
-      console.log("search_active:")
       if(index == 1){
         this.activetab = 1
+        this.keyword=""
       } else if(index == 2){
         this.activetab = 2
       }
     },
-    ClickSetting: function (inex) {
+    ClickSetting: function (index) {
       this.editBtn = true
       this.shouldDisable = false
       this.addHash = true
       document.getElementById('goal').focus()
     },
     EditUserGoal: function () {
+      this.updateFlg = 1
+      this.UpdateUserData(this.updateFlg)
+      //sidebar api완성되면 지울것
       this.shouldDisable = true
       this.editBtn = false
       this.addHash = false
@@ -111,7 +126,7 @@ export default {
     showList: function () {
     },
     Logout: function () {
-      console.log("logout!")
+      console.log("Logout")
       axios.post(`http://127.0.0.1:3000/logout`, 
         {
             // email: this.mail_address,
@@ -126,13 +141,19 @@ export default {
             (error) => { console.log(error) }
         )
     },
-    search: function () {
-      console.log(this.keyword)
+    search: function (keyword) {
+      this.keyword = keyword
+      console.log("keyword",this.keyword)
       if(this.keyword =="" || this.keyword ==null || this.keyword ==undefined){
         this.keyword =="none"
       }
       this.$store.commit('auth/setSearchText', this.keyword)
       this.ChangeTab(2)
+    },
+    chageLangSelect: function () {
+      var keyword = event.target.value
+      console.log("event.target.value",event.target.value)
+      this.search(keyword)
     },
     GetUserData: function () {
       axios.get(`http://127.0.0.1:3000/side`, 
@@ -144,7 +165,31 @@ export default {
                 // this.hashList = response.data.phashtag
                 // this.userHashList = response.data.hashtag
                 // this.userGoal = response.data.goal
-                console.log(this.userDataList)
+            },
+            (error) => { console.log(error) }
+        )
+    },
+    UpdateUserData: function () {
+      console.log("userHash",this.userHash)
+      if(this.userHash !==''){
+        this.userHashList.push(this.userHash)
+      } 
+      console.log("updateFlg",this.updateFlg)
+      console.log("inputHashtag",this.userHashList)
+      console.log("goal",this.userGoal)
+
+      axios.get(`http://127.0.0.1:3000/side-update`, 
+        {
+          update_flag:this.updateFlg,
+          inputHashtag:this.userHashList,
+          goal:this.userGoal,
+        }).then(
+            (response) => { 
+              this.shouldDisable = true
+              this.editBtn = false
+              this.addHash = false
+              this.addHashInput = false
+              this.userHash = ""
             },
             (error) => { console.log(error) }
         )
@@ -225,34 +270,44 @@ div#graph {
   font-size: 0.7em;
 }
 #addhashbtn{
-  width: 20%;
+  width: 10%;
   float: left;
   text-align: center;
+  cursor: pointer;
 }
 #user_goal{
   display: inline-block;
   width: 100%;
+  margin-top: 5%;
 }
 #user_goal span {
   float: left;
 }
-#user_goal input {
+#edit-btn{
+  width: 30%;
+  margin-top: 5%;
+  border-radius: 4px;
+  background-color:#fcaf17;
+  color: #fff;
+}
+#goal {
   float: left;
   margin-left: 3%;
   width: 100%;
   border: none;
 }
-#goal{
-  width: 30%;
-  float: right;
+#addUserHash{
+  float: left;
+  margin-left: 3%;
+  width: 100%;
 }
 .main-header{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color:#fcaf17;
-    padding: 1%;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color:#fcaf17;
+  padding: 1%;
+  z-index: 999;
 }
 .green_window {
 	display: inline-block;
@@ -287,6 +342,16 @@ img {
   margin-top: 1%;
   margin-left: 1%;
 }
+#btn-icon1{
+  width: 2%;
+  position: absolute;
+  right: 29%;
+}
+#btn-icon2{
+  width: 2%;
+  position: absolute;
+  right: 25%;
+}
 p{
   display: inline-block;
   width: 20%;
@@ -295,15 +360,69 @@ p{
   vertical-align: top;
   margin-top: 1%;
 }
-button{
-  vertical-align: top;
+a{
+  display: inline-block;
+  width: 20%;
+  font-size: 12px;
   margin-left: 1%;
+  vertical-align: top;
+  margin-top: 1%;
+}
+/* GENERAL BUTTON STYLING */
+#logout,
+#logout::after {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+#logout {
+  background: none;
+  border: 3px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 9px;
+  position: relative;
+  text-transform: uppercase;
   width: 15%;
+}
+#logout::before,
+#logout::after {
+  background: #fff;
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+#logout:hover {
+  color: #fcaf17;
 }
 #logout{
   width: 5%;
   position: absolute;
-  right: 2%;
-  top: 23%;
+  right: 18%;
+  top: 37%;
+}
+#logout::after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 0;
+}
+#logout:hover:after {
+  width: 100%;
+}
+select {
+  margin-bottom: 1em;
+  padding: .25em;
+  border: 0;
+  border-bottom: 2px solid currentcolor; 
+  font-weight: bold;
+  letter-spacing: .15em;
+  border-radius: 0;
+  background-color: antiquewhite;
+}
+select::-ms-expand {
+  /* for IE 11 */
+  display: none;
 }
 </style>
