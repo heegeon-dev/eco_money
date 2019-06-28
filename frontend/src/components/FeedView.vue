@@ -1,7 +1,7 @@
 <template>
-  <div class="modal-backdrop">
-    <div class="modal">
-      <header class="modal-header">
+  <div class="feed-view">
+    <div class="feed-content">
+      <header class="feed_header">
         <slot name="header">
           <div id="user_data">
             <img id="user_img" src="../assets/3.png">
@@ -16,18 +16,13 @@
               <p id="user_hash">#반포자이</p>
             </div>
           </div>
-          <textarea
-            id="write"
-            style="width:95%; heigth:80%"
-            placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
-          ></textarea>
+          <textarea id="write" style="width:95%; heigth:80%"></textarea>
           <div class="userdata">
             <div id="btn_group">
               <button id="btn" v-on:click="setTerm(1)">1개월</button>
               <button id="btn" v-on:click="setTerm(3)">3개월</button>
               <button id="btn" v-on:click="setTerm(6)">6개월</button>
               <button id="btn" v-on:click="setTerm(12)">12개월</button>
-              <button v-on:click="setTerm(99)" style="margin-left: 15%;">조건검색</button>
             </div>
             <div id="termandonoff">
               <div class="term">
@@ -44,7 +39,7 @@
           </div>
         </slot>
       </header>
-      <section class="modal-body">
+      <section class="feed-body">
         <div id="graph">
           <div id="Piegraph">
             <vue-c3 :handler="handler"></vue-c3>
@@ -65,15 +60,63 @@
         </div>
       </section>
 
-      <footer class="modal-footer">
+      <footer class="feed-footer">
         <slot name="footer">
-          <button type="submit" class="btn btn-success">공유하기</button>
-          <button type="button" class="btn-green" @click="close">취소</button>
+          <section class="“feed-comment”">
+            <span>
+              <button>
+                <span>
+                  <img id="“feed-like”" src="../../../assets/like.png" aria-label="Like">
+                </span>
+              </button>
+            </span>
+            <span>
+              <button>
+                <span
+                  img
+                  id="“feed-comment”"
+                  src="../../../assets/comment.png"
+                  aria-label="Comment"
+                ></span>
+              </button>
+            </span>
+            <span>
+              <button>
+                <span>
+                  <img
+                    id="feed-bookmark"
+                    src="../../../assets/bookmark.png"
+                    aria-label="“Bookmark”"
+                  >
+                </span>
+              </button>
+            </span>
+          </section>
+
+          <div class="“feed-comment-time”">
+            <a class="c-Yi7" href="/p/Bw7dI8ylIQrtBHgUNkpgDqv2FA4hcwO6Bq0AxE0/">
+              <time
+                class="_1o9PC Nzb55"
+                datetime="2019-05-01T17:52:59.000Z"
+                title="May 2, 2019"
+              >May 2</time>
+            </a>
+          </div>
+
+          <section>
+            <div class="feed-comment-area">
+              <form class="feed-comment-post" method="POST">
+                <textarea aria-label="Add a comment…" placeholder="Add a comment…"></textarea>
+                <button type="submit">Post</button>
+              </form>
+            </div>
+          </section>
         </slot>
       </footer>
     </div>
   </div>
 </template>
+
 <script>
 // 프라이빗 따옴
 import Vue from "vue";
@@ -421,11 +464,10 @@ label {
 }
 
 div#tag_group {
-    float: left;
-    font-size: 15px;
-    width: 50%;
-    margin-left: 23%;
-
+  float: left;
+  font-size: large;
+  width: 50%;
+  margin-left: 15%;
 }
 textarea#write {
   width: 100%;
@@ -470,10 +512,5 @@ p#user_id {
   margin-top: 5px;
   width: 20%;
   font-size: initial;
-}
-
-div#Piegraph {
-  width: 30%;
-  margin-inline-start: 30%;
 }
 </style>
