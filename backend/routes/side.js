@@ -24,13 +24,13 @@ router.get('/', function (req, res, next) {
     con.query(sql, [req.query .uid], function (error, result) {
         if (error) throw error;
         else {
-            res.json(
-                {
-                    "hashtag": result[0].hashtag,
-                    "phashtag": result[0].phashtag,
+            res.json({
+                Headers:{
+                    "hashtag": result[0].inputhastag,
+                    "phashtag": result[0].apihashtag,
                     "goal": result[0].goal
                 }
-
+            }
             );
         }
 
