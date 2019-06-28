@@ -93,7 +93,8 @@ export default {
       tag1:"자동차대출",
       tag2:"적금상품",
       tag3:"펀드상품",
-      updateFlg:0
+      updateFlg:0,
+      userId:""
     }
   },
   methods: {
@@ -156,12 +157,22 @@ export default {
       this.search(keyword)
     },
     GetUserData: function () {
+      //var uid = this.$store.getters['auth/uId']
+      // console.log("uid",uid)
       axios.get(`http://127.0.0.1:3000/side`, 
         {
           //파라미터
+          params: {
+            uid:this.userId
+          }
         }).then(
             (response) => { 
-                this.userDataList = response.data
+                // this.userDataList =JSON.parse(response)
+                //this.userDataList = response
+                // this.userDataList = response.json()
+                console.log("typeof",typeof response)
+                console.log("response",response)
+                // this.userDataList = response.data
                 // this.hashList = response.data.phashtag
                 // this.userHashList = response.data.hashtag
                 // this.userGoal = response.data.goal
@@ -196,6 +207,7 @@ export default {
     }
   },
   created(){
+    this.userId = this.$store.getters['auth/uId']
     this.GetUserData()
   }
 }

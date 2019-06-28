@@ -54,12 +54,11 @@ export default {
           }).then(
               (response) => { 
                 console.log("response",response)
-                this.$store.commit('auth/uId', response.data.UID)
-                console.log('auth/uId',this.$store.getters['auth/uId'])
-                // if(response.data.UID == "login!"){
-                //   this.$store.commit('auth/uId',response.data )
-                //   this.$router.push("/MainContent")
-                // }
+                if(response.data !== "" || response.data !=="undefind"){
+                  this.$store.commit('auth/uId', response.data)
+                  console.log('auth/uId',this.$store.getters['auth/uId'])
+                  this.$router.push("/MainContent")
+                }
                },
               (error) => { console.log(error) }
               // res=> {
