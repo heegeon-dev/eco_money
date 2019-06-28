@@ -24,10 +24,11 @@ router.post("/", function (req, res, next) {
   con.query(sql, [userEmail], function (error, results) {
     if (error) throw error;
     else {
-      console.log(results[0].uid);
+      console.log(results[0].UID);
       if (userPassword == results[0].password) {
-        console.log(result[0] + " login!");
-        res.send(results[0].uid);
+        console.log(results);
+        console.log(results[0].UID + " login!");
+        res.json(results[0].UID);
       } else {
         res.json('incorrect password');
       }
