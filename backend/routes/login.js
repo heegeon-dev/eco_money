@@ -26,7 +26,7 @@ router.post("/", function (req, res, next) {
     else {
       console.log(results[0].uid);
       if (userPassword == results[0].password) {
-        console.log("login!");
+        console.log(result[0] + " login!");
         res.send(results[0].uid);
       } else {
         res.json('incorrect password');
