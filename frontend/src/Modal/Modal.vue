@@ -16,7 +16,7 @@
               <p id="user_hash">#반포자이</p>
             </div>
           </div>
-           <textarea
+          <textarea
             id="write"
             style="width:95%; heigth:80%"
             placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
@@ -27,53 +27,48 @@
               <button id="btn" v-on:click="setTerm(3)">3개월</button>
               <button id="btn" v-on:click="setTerm(6)">6개월</button>
               <button id="btn" v-on:click="setTerm(12)">12개월</button>
-              <button v-on:click="setTerm(99)"
-              style="margin-left: 15%;">조건검색</button>
-              </div>
+              <button v-on:click="setTerm(99)" style="margin-left: 15%;">조건검색</button>
+            </div>
             <div id="termandonoff">
               <div class="term">
                 <input class="termfromto" type="text" v-model="termfrom">
                 ~
                 <input class="termfromto" type="text" v-model="termto">
               </div>
-    
+
               <div class="toggle">
                 <span>상세금액 표기</span>
                 <toggle-button v-model="myDataVariable" color="#fcaf17"/>
               </div>
             </div>
           </div>
-
-
-          
         </slot>
       </header>
       <section class="modal-body">
-        
-             <div id="graph">
-              <div id="Piegraph">
-                <vue-c3 :handler="handler"></vue-c3>
-                <p id="title">수입</p>
-              </div>
-              <div id="graphdetails">
-                <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
-              </div>
-            </div>
-            <div id="graph">
-              <div id="Piegraph">
-                <vue-c3 :handler="ExpenditureHandler"></vue-c3>
-                <p id="title">지출</p>
-              </div>
-              <div id="graphdetails">
-                <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
-              </div>
-            </div>
+        <div id="graph">
+          <div id="Piegraph">
+            <vue-c3 :handler="handler"></vue-c3>
+            <p id="title">수입</p>
+          </div>
+          <div id="graphdetails">
+            <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
+          </div>
+        </div>
+        <div id="graph">
+          <div id="Piegraph">
+            <vue-c3 :handler="ExpenditureHandler"></vue-c3>
+            <p id="title">지출</p>
+          </div>
+          <div id="graphdetails">
+            <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
+          </div>
+        </div>
       </section>
 
       <footer class="modal-footer">
         <slot name="footer">
-          <button type="submit" class="btn btn-success" >공유하기</button>
-          <button type="button" class="btn-green"  @click="close">취소</button>
+          <button type="submit" class="btn btn-success">공유하기</button>
+          <button type="button" class="btn-green" @click="close">취소</button>
         </slot>
       </footer>
     </div>
@@ -277,9 +272,7 @@ export default {
   position: fixed;
   top: 2%;
   left: 30%;
-
 }
-
 
 .modal-footer {
   padding: 5px;
@@ -409,7 +402,7 @@ label {
 }
 #Piegraph {
   position: relative;
-  
+
   float: left;
 }
 #graphdetails {
@@ -428,10 +421,11 @@ label {
 }
 
 div#tag_group {
-  float: left;
-  font-size: large;
-  width: 50%;
-  margin-left: 15%;
+    float: left;
+    font-size: 15px;
+    width: 50%;
+    margin-left: 23%;
+
 }
 textarea#write {
   width: 100%;
@@ -446,36 +440,40 @@ p#user_id {
   width: 5%;
 }
 
-
-.toggle{
+.toggle {
   width: 28%;
   text-align: right;
   float: left;
 }
-.toggle span{
+.toggle span {
   font-size: 9px;
   font-weight: 100;
   margin-right: 2%;
 }
 
-.userdata{
+.userdata {
   overflow: scroll;
 }
 
-.btn-success{
-    width: 70%;
-    height: 100%;
-    margin-top: 5px;
-    margin-right: 5px;
-    font-size: large;
-    font-weight: bold;
+.btn-success {
+  width: 70%;
+  height: 100%;
+  margin-top: 5px;
+  margin-right: 5px;
+  font-size: large;
+  font-weight: bold;
 }
 
 .btn-green {
-    margin-right: 5%;
-    height: 100%;
-    margin-top: 5px;
-    width: 20%;
-    font-size: initial;
+  margin-right: 5%;
+  height: 100%;
+  margin-top: 5px;
+  width: 20%;
+  font-size: initial;
+}
+
+div#Piegraph {
+  width: 30%;
+  margin-inline-start: 30%;
 }
 </style>
