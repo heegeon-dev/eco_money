@@ -24,15 +24,14 @@ router.get('/', function (req, res, next) {
     con.query(sql, [req.query .uid], function (error, result) {
         if (error) throw error;
         else {
-            // res.json({
-            //     Headers:{
-            //         "hashtag": result[0].inputhastag,
-            //         "phashtag": result[0].apihashtag,
-            //         "goal": result[0].goal
-            //     }
-            // }
-            // );
-            res.send("1");
+            res.json(
+                {
+                    "hashtag": result[0].inputhastag,
+                    "phashtag": result[0].apihashtag,
+                    "goal": result[0].goal
+                }
+
+            );
         }
 
     })
