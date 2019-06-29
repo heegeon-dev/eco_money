@@ -1,7 +1,7 @@
 <template>
   <div class="userdata" v-on:scroll="scrollInfinite($event)">
     <div id="btn_group">
-        <button id="btn1" name="btn" v-on:click=setTerm(1)>1개월</button>
+        <button id="amonth" v-on:click=setTerm(1)>1개월</button>
         <button id="btn" v-on:click=setTerm(3)>3개월</button>
         <button id="btn" v-on:click=setTerm(6)>6개월</button>
         <button id="btn" v-on:click=setTerm(12)>12개월</button>
@@ -106,7 +106,8 @@ export default {
         }
       },
       asset:"1,000,000",
-      ko:ko
+      ko:ko,
+      tabflag:1
     }
   },
   methods: {
@@ -198,29 +199,40 @@ export default {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        if(this.tabflag == 0){
+          document.getElementById('amonth').setAttribute('style', 'color:#fff;background-color:#fcaf17')
+        }
       }
       else if(value == 3)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(3, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       } 
       else if(value == 6)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(6, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       }
       else if(value == 12)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(12, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       } 
       else if(value == 99)
       {
         this.search_term = value
         this.showDatePicker = true
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       }
     },
     setDateFormat(date){
@@ -274,9 +286,6 @@ export default {
 
     //기간표시 초기값
     this.setTerm(1)
-    // var elements = document.getElementById( 'btn1' )
-    // elements.setAttribute('style', 'color:white;background-color:#fcaf17;')
-
     this.termto = moment(new Date).format('YYYY/MM/DD')
     this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
     
@@ -288,6 +297,11 @@ export default {
 
     this.GetUserMonthData()
     window.addEventListener('scroll', this.scrollInfinite)
+
+    //초기 탭 클릭표시
+    if(this.tabflag == 1){
+      document.getElementById('amonth').setAttribute('style', 'color:#fff;background-color:#fcaf17')
+    }
   }
 }
 </script>
@@ -388,7 +402,7 @@ label{
 .user_data{
   box-shadow: 0px 0px 0px 1px grey;
 }
-#btn1{
+#amonth{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -415,7 +429,7 @@ label{
   margin-right: 1px;
   width: 19.5%;
 }
-#btn1:active, #btn1:focus, #btn1:hover #btn1:visited{
+#amonth:active, #amonth:focus, #amonth:hover #amonth:visited{
   color:white;
   background-color: #fcaf17;
 }
