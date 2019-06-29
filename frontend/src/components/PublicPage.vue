@@ -94,6 +94,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+div#pub_write {
+  
+
+}
+
 h1,
 h2 {
   font-weight: normal;
@@ -122,7 +127,6 @@ a {
 
 header#write_tag {
   text-align: left;
-
   background-color: blanchedalmond;
 }
 
