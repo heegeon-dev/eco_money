@@ -89,7 +89,7 @@
             <section class="“feed-comment”">
               <div id="btn_group2">
                 <form>
-                  <input type="image" src="../assets/like.png" @click="btCount" id="like">
+                  <input type="button" src="../assets/like.png" @click="btCount" id="like">
                 </form>
 
                 <form>
@@ -126,9 +126,11 @@
           <section>
             <div class="feed-comment-area">
               <!-- <form class="feed-comment-post" method="POST"> -->
+              <div>
               <ul id="reply"></ul>
+              </div>
               <textarea id="comment_form" placeholder="Add a comment…"></textarea>
-
+              
               <button id="bt_post" type="submit" class="btn btn-success" v-on:click="makeReply">Post</button>
               <!-- </form> -->
             </div>
@@ -198,7 +200,7 @@ export default {
       count++;
     },
     makeReply: function() {
-      $("#reply").append("<li>" + $("#comment_form").val() + "</li>");
+      $("#reply").append("<li>"+ "닉네임1" + " :" + $("#comment_form").val() + "</li>");
       $("#comment_form").val("");
     },
 
@@ -512,6 +514,8 @@ h2 {
 ul {
   list-style-type: none;
   padding: 0;
+  display: table-cell;
+  text-align: -webkit-auto;
 }
 li {
   display: inline-block;
