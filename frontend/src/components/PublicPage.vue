@@ -21,7 +21,9 @@
                     type="submit"
                     class="btn btn-success"
                     style="margin-top:50%; width: auto; font-size: larger;
-              font-weight: bold;"
+              font-weight: bold;
+               background-color: #7c7363;
+               border-color: #7c7363;"
                   >공유하기</button>
                 </div>
               </div>
@@ -35,7 +37,12 @@
             <div id="feedview_page">
               <newPost v-if="postfeed=true"/>
               <div id="no_feed" v-if="postfeed=false">
-                <p>컨텐츠가 없습니다. 게시글을 남겨보세요!</p>
+                <p style=" font-size: 20px;
+                          width: 100%;">
+                 (๑°ㅁ°๑)‼✧ <br>
+                  컨텐츠가 없습니다.
+                  게시글을 남겨보세요!
+                </p>
               </div>
             </div>
           </section>
@@ -94,6 +101,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+div#pub_write {
+}
+
 h1,
 h2 {
   font-weight: normal;
@@ -122,7 +132,6 @@ a {
 
 header#write_tag {
   text-align: left;
-
   background-color: blanchedalmond;
 }
 
@@ -146,7 +155,20 @@ textarea#write {
   margin-top: 6%;
 }
 
+div#write {
+background-color: white;
+}
+
+div#no_feed {
+  margin-top: 20%;
+}
+
 header#show-modal {
   width: 100%;
+}
+
+div#write_body {
+  margin-top: 5%;
+  background-color: white;
 }
 </style>

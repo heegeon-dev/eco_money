@@ -1,7 +1,7 @@
 <template>
-  <div class="userdata">
+  <div class="userdata" v-on:scroll="scrollInfinite($event)">
     <div id="btn_group">
-        <button id="btn" name="btn" v-on:click=setTerm(1)>1개월</button>
+        <button id="amonth" v-on:click=setTerm(1)>1개월</button>
         <button id="btn" v-on:click=setTerm(3)>3개월</button>
         <button id="btn" v-on:click=setTerm(6)>6개월</button>
         <button id="btn" v-on:click=setTerm(12)>12개월</button>
@@ -41,7 +41,8 @@
       </div>
       <div id="graphdetails">
         <div v-for="(value, key) in incomeitems" v-bind:key="key">
-          수입 {{ key }} : {{ value }}
+          <p id="incomedetails">수입 {{ key }} :</p>
+          <p id="incomeamnt">{{ value }}</p>
         </div>
       </div>
     </div>
@@ -52,7 +53,8 @@
       </div>
       <div id="graphdetails">
         <div v-for="(value, key) in incomeitems" v-bind:key="key">
-          수입 {{ key }} : {{ value }}
+          <p id="incomedetails">지출 {{ key }} :</p>
+          <p id="incomeamnt">{{ value }}</p>
         </div>
       </div>
     </div>
@@ -104,7 +106,8 @@ export default {
         }
       },
       asset:"1,000,000",
-      ko:ko
+      ko:ko,
+      tabflag:1
     }
   },
   methods: {
@@ -196,29 +199,40 @@ export default {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        if(this.tabflag == 0){
+          document.getElementById('amonth').setAttribute('style', 'color:#fff;background-color:#fcaf17')
+        }
       }
       else if(value == 3)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(3, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       } 
       else if(value == 6)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(6, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       }
       else if(value == 12)
       {
         this.search_term = value
         this.termfrom = moment(this.termto).subtract(12, 'month').format('YYYY/MM/DD')
         this.showDatePicker = false
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       } 
       else if(value == 99)
       {
         this.search_term = value
         this.showDatePicker = true
+        this.tabflag = 0
+        document.getElementById('amonth').setAttribute('style', 'color:#000;background-color:#fff')
       }
     },
     setDateFormat(date){
@@ -227,17 +241,11 @@ export default {
     execSearch: function(){
       this.termto = moment(this.termto).format('YYYY/MM/DD')
       this.termfrom = moment(this.termfrom).format('YYYY/MM/DD')
-      // if(this.validation()){
-      //   this.getStampRallyInfo()
-      //   this.getStampRallyInfo()
-      //   this.getStampStatics()
-      //   this.initGraph()
-      // }
     },
     GetUserMonthData: function(){
       // var termto = moment(this.termto).format('YYYYMMDD')
       // var termfrom = moment(this.termfrom).format('YYYYMMDD')
-        axios.get(`http://127.0.0.1:3000/main`, 
+        axios.get(`http://192.168.160.50:3000/main`, 
         { 
           //파라미터추가
           // fromdate: termfrom,
@@ -250,6 +258,26 @@ export default {
             },
             (error) => { console.log(error) }
         )
+    },
+    scrollInfinite: function(e) {
+      console.log("스크롤되고있다")
+      var scrollBody = e.target.scrollingElement
+      var clientHeight = Math.floor(scrollBody.clientHeight)
+      var scroll_body = Math.floor(scrollBody.scrollHeight) - clientHeight
+      var scroll_top = Math.floor(scrollBody.scrollTop)
+      var percent_of_scroll = Math.floor((scroll_top / scroll_body) *100)
+
+      if(this.$route.path == '/MainContent'){
+        if (percent_of_scroll >= 98) {
+          var self = this
+          setTimeout(function() {
+            self.GetUserPastData()
+          }, 300)
+        }
+      }
+    },
+    GetUserPastData: function() {
+      console.log("스크롤 감지후 호출됨")
     }
   },
   created () {
@@ -260,7 +288,6 @@ export default {
     this.setTerm(1)
     this.termto = moment(new Date).format('YYYY/MM/DD')
     this.termfrom = moment(this.termto).subtract(1, 'month').format('YYYY/MM/DD')
-    //데이터 호출
     
   },
   mounted () {
@@ -269,6 +296,12 @@ export default {
     this.showExpenditureGraph()
 
     this.GetUserMonthData()
+    window.addEventListener('scroll', this.scrollInfinite)
+
+    //초기 탭 클릭표시
+    if(this.tabflag == 1){
+      document.getElementById('amonth').setAttribute('style', 'color:#fff;background-color:#fcaf17')
+    }
   }
 }
 </script>
@@ -292,6 +325,16 @@ a {
 p{
   margin-top: 3%;
 }
+p#incomedetails {
+    width: 100%;
+    /* right: 5%; */
+    padding-right: 65%;
+}
+p#incomeamnt {
+    width: 100%;
+    /* right: 5%; */
+    padding-left: 30%;
+}
 .vdp-datepicker {
   text-align: center;
   width: 39%;
@@ -314,10 +357,11 @@ p{
   text-align: center;
 }
 #available p {
-  width: 100%;
+  width: 96%;
   font-size: 21px;
   text-align: center;
   color: #fcaf17;
+  border-style: outset;
 }
 input#calendar{
   border-radius: 6px;
@@ -341,6 +385,9 @@ label{
   width: 28%;
   text-align: right;
   float: left;
+  position: absolute;
+  top: 25%;
+  right: 28%;
 }
 .toggle span{
   font-size: 9px;
@@ -353,7 +400,16 @@ label{
   margin-left: 2%;
 }
 .user_data{
-   box-shadow: 0px 0px 0px 1px grey;
+  box-shadow: 0px 0px 0px 1px grey;
+}
+#amonth{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-right:-4px;
+  float: left;
+  width: 15%;
 }
 #btn{
   border-top-left-radius: 5px;
@@ -370,22 +426,34 @@ label{
   color: rgb(74, 76, 77);
   padding: 5px;
   margin-bottom: 2%;
+  margin-right: 1px;
+  width: 19.5%;
+}
+#amonth:active, #amonth:focus, #amonth:hover #amonth:visited{
+  color:white;
+  background-color: #fcaf17;
 }
 #btn:active, #btn:focus, #btn:hover #btn:visited{
   color:white;
   background-color: #fcaf17;
 }
+#graph{
+  width: 100%;
+}
 #Piegraph{
   position: relative;
-  width: 52%;
+  width: 50%;
+  height: 300px;
   float: left;
   margin-top: 2%;
 }
 #graphdetails {
-  width: 35%;
+  width: 50%;
+  height: 350px;
   float: left;
   font-size: 0.8em;
   margin-top: 2%;
+  border-style: outset;
 }
 #title{
   position: absolute;

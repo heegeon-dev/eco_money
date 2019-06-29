@@ -110,7 +110,7 @@ export default {
     },
     moveToAuth: function() {
       //인증URL 추가예정
-      axios.post(`http://127.0.0.1:3000/`, 
+      axios.post(`http://192.168.160.50:3000/`, 
         { 
         }).then(
             (response) => { 

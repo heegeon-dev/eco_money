@@ -32,13 +32,13 @@
               <p id="user_id">{{userName}}</p>
               <img id="user_setting" v-on:click="ClickSetting" src="../../../assets/setting_icon.png"/>
               <div class="hash" v-for="hash in hashList" v-bind:key="hash">
-                <p id="api_hash">#{{hash}}</p>
+                <p id="api_hash">{{hash}}</p>
               </div>
             </div>
             <hr>
             <div id="user_goal">
               <div id="user_hash" v-for="hash in userHashList" v-bind:key="hash">
-                <p id="user_hash">#{{hash}}</p>
+                <p id="user_hash">{{hash}}</p>
               </div>
               <img id="addhashbtn" v-if="addHash" v-on:click=EditUserHash() src="../../../assets/plus.png"/>
               <input v-if="addHashInput" type="text" id="addUserHash" v-model="userHash">
@@ -77,9 +77,9 @@ export default {
   data() {
     return {
       activetab: 1,
-      userName:'test11',
-      hashList:['ㅇㅇ적금','ㅇㅇ자동차대출','ㅇㅇ담보대출'],
-      userHashList:['포르쉐','반포자이'],
+      userName:'',
+      hashList:[],
+      userHashList:[],
       userHash:'',
       userGoal:'',
       settingOn:false,
@@ -93,7 +93,10 @@ export default {
       tag1:"자동차대출",
       tag2:"적금상품",
       tag3:"펀드상품",
-      updateFlg:0
+
+      updateFlg:0,
+      userId:"",
+      scrollFlag: false
     }
   },
   methods: {
@@ -127,7 +130,7 @@ export default {
     },
     Logout: function () {
       console.log("Logout")
-      axios.post(`http://127.0.0.1:3000/logout`, 
+      axios.post(`http://192.168.160.50:3000/logout`, 
         {
             // email: this.mail_address,
             // password: this.password,
@@ -156,15 +159,17 @@ export default {
       this.search(keyword)
     },
     GetUserData: function () {
-      axios.get(`http://127.0.0.1:3000/side`, 
+
+      axios.get(`http://192.168.160.50:3000/side`, 
         {
           //파라미터
         }).then(
             (response) => { 
-                this.userDataList = response.data
-                // this.hashList = response.data.phashtag
-                // this.userHashList = response.data.hashtag
-                // this.userGoal = response.data.goal
+                this.userDataList = JSON.parse(response.data)
+                this.hashList = this.userDataList.hashtag
+                this.userHashList = this.userDataList.phashtag
+                this.userGoal = this.userDataList.goal
+                this.userName = this.userDataList.nickname
             },
             (error) => { console.log(error) }
         )
@@ -178,7 +183,7 @@ export default {
       console.log("inputHashtag",this.userHashList)
       console.log("goal",this.userGoal)
 
-      axios.get(`http://127.0.0.1:3000/side-update`, 
+      axios.get(`http://192.168.160.50:3000/side-update`, 
         {
           update_flag:this.updateFlg,
           inputHashtag:this.userHashList,
@@ -193,10 +198,38 @@ export default {
             },
             (error) => { console.log(error) }
         )
+    },
+    scrollInfinite: function(e) {
+      // if(this.scrollFlag)
+      // {
+        if (!this.noMoreData || !this.busy) {
+
+          var scrollBody = e.target.scrollingElement
+          var clientHeight = Math.floor(scrollBody.clientHeight)
+          var scroll_body = Math.floor(scrollBody.scrollHeight) - clientHeight
+          var scroll_top = Math.floor(scrollBody.scrollTop)
+          var percent_of_scroll = Math.floor((scroll_top / scroll_body) *100)
+
+          if(this.$route.path == '/MainContent'){
+            if (percent_of_scroll >= 100) {
+              var self = this
+              setTimeout(function() {
+                self.GetUserPastData()
+              }, 300)
+            }
+          }
+        }
+      // }
+    },
+    GetUserPastData: function() {
+      console.log("스크롤 감지후 호출됨")
     }
   },
   created(){
     this.GetUserData()
+  },
+  mounted(){
+    window.addEventListener('scroll', this.scrollInfinite)
   }
 }
 </script>
@@ -234,7 +267,7 @@ li.item.active{
   float: left;
   margin-left: 28%;
   margin-top: 9%;
-  box-shadow: 0px 0px 0px 1px grey;
+  /* box-shadow: 0px 0px 0px 1px grey; */
 }
 div#termandonoff {
   padding: 2%;
