@@ -227,17 +227,11 @@ export default {
     execSearch: function(){
       this.termto = moment(this.termto).format('YYYY/MM/DD')
       this.termfrom = moment(this.termfrom).format('YYYY/MM/DD')
-      // if(this.validation()){
-      //   this.getStampRallyInfo()
-      //   this.getStampRallyInfo()
-      //   this.getStampStatics()
-      //   this.initGraph()
-      // }
     },
     GetUserMonthData: function(){
       // var termto = moment(this.termto).format('YYYYMMDD')
       // var termfrom = moment(this.termfrom).format('YYYYMMDD')
-        axios.get(`http://127.0.0.1:3000/main`, 
+        axios.get(`http://192.168.160.50:3000/main`, 
         { 
           //파라미터추가
           // fromdate: termfrom,

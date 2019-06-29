@@ -128,7 +128,7 @@ export default {
     },
     Logout: function () {
       console.log("Logout")
-      axios.post(`http://127.0.0.1:3000/logout`, 
+      axios.post(`http://192.168.160.50:3000/logout`, 
         {
             // email: this.mail_address,
             // password: this.password,
@@ -157,9 +157,7 @@ export default {
       this.search(keyword)
     },
     GetUserData: function () {
-      //var uid = this.$store.getters['auth/uId']
-      // console.log("uid",uid)
-      axios.get(`http://127.0.0.1:3000/side`, 
+      axios.get(`http://192.168.160.50:3000/side`, 
         {
           //파라미터
           params: {
@@ -167,15 +165,7 @@ export default {
           }
         }).then(
             (response) => { 
-                // this.userDataList =JSON.parse(response)
-                //this.userDataList = response
-                // this.userDataList = response.json()
-                console.log("typeof",typeof response)
-                console.log("response",response)
-                // this.userDataList = response.data
-                // this.hashList = response.data.phashtag
-                // this.userHashList = response.data.hashtag
-                // this.userGoal = response.data.goal
+                this.userDataList = response.data
             },
             (error) => { console.log(error) }
         )
@@ -189,7 +179,7 @@ export default {
       console.log("inputHashtag",this.userHashList)
       console.log("goal",this.userGoal)
 
-      axios.get(`http://127.0.0.1:3000/side-update`, 
+      axios.get(`http://192.168.160.50:3000/side-update`, 
         {
           update_flag:this.updateFlg,
           inputHashtag:this.userHashList,

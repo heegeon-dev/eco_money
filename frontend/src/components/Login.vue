@@ -39,25 +39,28 @@ export default {
         errMailAddress:"false",
         errMsgMailAddress:"",
         errPassword:"false",
-        errMsgPassword:""
+        errMsgPassword:"",
+        uid:"",
     }
   },
   methods:{
     loginSubmit: function() {
+      var self = this
        if (!this.chkValidation()) {
          return false
       } else {
-        axios.post(`http://127.0.0.1:3000/login`, 
+        //127.0.0.1
+        axios.post(`http://192.168.160.50:3000/login`, 
           { 
-              email: this.mail_address,
-              password: this.password
+              email: self.mail_address,
+              password: self.password
           }).then(
               (response) => { 
                 console.log("response",response)
                 if(response.data !== "" || response.data !=="undefind"){
-                  this.$store.commit('auth/uId', response.data)
-                  console.log('auth/uId',this.$store.getters['auth/uId'])
-                  this.$router.push("/MainContent")
+                  self.$store.commit('auth/uId', response.data)
+                  self.uid = self.$store.getters['auth/uId']
+                  self.$router.push("/MainContent")
                 }
                },
               (error) => { console.log(error) }
