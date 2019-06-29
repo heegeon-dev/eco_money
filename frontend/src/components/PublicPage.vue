@@ -72,7 +72,12 @@ export default {
     return {
       postfeed: true,
       showModal: false,
-      search_text: "none"
+      search_text: "none",
+      uid:"",
+      offset: 0,
+      limit: 5,
+      PublicPostList:[],
+      mode:1
     };
   },
   methods: {
@@ -82,19 +87,53 @@ export default {
     showFeed: function(index) {
       this.postfeed = true;
       document.getElementsByClassName("feed-view");
+    },
+    GetPublicPost:function(){
+      if(this.search_text !== "")
+      {
+        this.mode =2
+      } else {
+        this.mode =1
+      }
+        axios.post(`http://192.168.160.50:3000/getPost`, 
+        { 
+          //파라미터
+          params: {
+            mode:this.mode,
+            keyword:this.search_text,
+            offset: this.offset,
+            limit: this.limit,
+            uid:this.userId
+          }
+        }).then(
+            (response) => { 
+              this.PublicPostList = JSON.parse(response.data)
+              console.log("this.PublicPostList",this.PublicPostList)
+              this.offset = this.offset+5
+              console.log("this.offset",this.offset)
+            },
+            (error) => { console.log(error) }
+        )
     }
   },
   created() {
     console.log(
       "this.$store.getters['auth/searchText'] ",
       this.$store.getters["auth/searchText"]
-    );
-    if (this.search_text !== "none") {
+    )
+    //uid설정
+    this.userId = this.$store.getters['auth/uId']
+
+    //검색어 있을때, 없을때 파라미터 설정
+    if (this.search_text !== "") {
       //검색시 키워드 파라미터로 전송하기
-      this.search_text = this.$store.getters["auth/searchText"];
+      this.search_text = this.$store.getters["auth/searchText"]
     } else {
-      this.$store.commit("auth/setSearchText", "");
+      this.$store.commit("auth/setSearchText", "")
     }
+
+    //포스트출력
+    this.GetPublicPost()
   }
 };
 </script>
