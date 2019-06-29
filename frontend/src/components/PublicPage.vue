@@ -61,6 +61,7 @@
 import myModal from "../Modal/Modal.vue";
 import FeedView from "./FeedView.vue";
 import { mapMutations, mapState } from "vuex";
+import axios from 'axios'
 
 export default {
   name: "publicpage",
