@@ -2,50 +2,73 @@
   <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
-        <p id="header_subject">게시글 쓰기 </p>
-        <slot name="header">
-          <div id="user_data">
-            <img id="user_img" src="../assets/3.png">
-            
-            <p id="user_id">UserName</p>
-             <input class="termfromto" id="write_date" type="form" v-model="termto">
+        <p id="header_subject">게시글 쓰기</p>
+        <!-- <slot name="header"> -->
+        <div id="user_data">
+          <img id="user_img" src="../assets/3.png">
 
-            <div id="tag_group">
-              <p id="user_hash">#연봉0000</p>
-              <p id="user_hash">#행복대출</p>
-              <p id="user_hash">#3년적금</p>
-              <p id="user_hash">#자동차대출</p>
-              <p id="user_hash">#포르쉐</p>
-              <p id="user_hash">#반포자이</p>
+          <p id="user_id">UserName</p>
+          <input class="termfromto" id="write_date" type="form" v-model="termto">
+
+          <div id="tag_group">
+            <p id="user_hash">#연봉0000</p>
+            <p id="user_hash">#행복대출</p>
+            <p id="user_hash">#3년적금</p>
+            <p id="user_hash">#자동차대출</p>
+            <p id="user_hash">#포르쉐</p>
+            <p id="user_hash">#반포자이</p>
+          </div>
+        </div>
+        <textarea
+          id="write"
+          style="width:95%; heigth:80%"
+          placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
+        ></textarea>
+        <div class="userdata" v-on:scroll="scrollInfinite($event)">
+          <div id="btn_group">
+            <button id="amonth" v-on:click="setTerm(1)">1개월</button>
+            <button id="btn" v-on:click="setTerm(3)">3개월</button>
+            <button id="btn" v-on:click="setTerm(6)">6개월</button>
+            <button id="btn" v-on:click="setTerm(12)">12개월</button>
+            <button id="btn" v-on:click="setTerm(99)">조건검색</button>
+          </div>
+          <div class="datepicker" v-if="showDatePicker">
+            <div class="datepicker-group">
+              <datepicker
+                v-model="termfrom"
+                :format="setDateFormat"
+                :language="ko"
+                placeholder="시작일"
+              ></datepicker>
+            </div>
+            <div class="fromto">~</div>
+            <div class="datepicker-group">
+              <datepicker v-model="termto" :format="setDateFormat" :language="ko" placeholder="종료일"></datepicker>
+            </div>
+            <div class="datepicker-group-btn">
+              <button
+                type="button"
+                class="btn btn-default btn-sm btn-login btn-info"
+                @click="execSearch()"
+              >검색</button>
             </div>
           </div>
-          <textarea
-            id="write"
-            style="width:95%; heigth:80%"
-            placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
-          ></textarea>
-          <div class="userdata">
-            <div id="btn_group">
-              <button id="btn" v-on:click="setTerm(1)">1개월</button>
-              <button id="btn" v-on:click="setTerm(3)">3개월</button>
-              <button id="btn" v-on:click="setTerm(6)">6개월</button>
-              <button id="btn" v-on:click="setTerm(12)">12개월</button>
-              <button v-on:click="setTerm(99)" style="margin-left: 15%;">조건검색</button>
+          <div id="termandonoff">
+            <div class="term" v-if="!showDatePicker">
+              <input class="termfromto" type="text" v-model="termfrom">
+              ~
+              <input class="termfromto" type="text" v-model="termto">
             </div>
-            <div id="termandonoff">
-              <div class="term">
-                <input class="termfromto" type="text" v-model="termfrom">
-                ~
-                <input class="termfromto" type="text" v-model="termto">
-              </div>
-
-              <div class="toggle">
-                <span>상세금액 표기</span>
-                <toggle-button v-model="myDataVariable" color="#fcaf17"/>
-              </div>
+            <div class="toggle">
+              <span>상세금액 표기</span>
+              <toggle-button v-model="myDataVariable" color="#fcaf17"/>
             </div>
           </div>
-        </slot>
+          <!-- <div id="available">
+            <p>예상 한달 가용 자산 : {{ asset }} 원</p>
+          </div> -->
+        </div>
+        <!-- </slot> -->
       </header>
       <section class="modal-body">
         <div id="graph">
@@ -54,29 +77,33 @@
             <p id="title">수입</p>
           </div>
           <div id="graphdetails">
-            <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
+            <div v-for="(value, key) in incomeitems" v-bind:key="key">
+              <p id="incomedetails">수입 {{ key }} :</p>
+              <p id="incomeamnt">{{ value }}</p>
+              <p id="incomedetails">지출 {{ key }} :</p>
+              <p id="incomeamnt">{{ value }}</p>
+            </div>
           </div>
         </div>
         <div id="graph">
-          <div id="Piegraph">
+          <div id="Piegraph" style="margin-top: -250px;">
             <vue-c3 :handler="ExpenditureHandler"></vue-c3>
             <p id="title">지출</p>
           </div>
-          <div id="graphdetails">
-            <div v-for="(value, key) in incomeitems" v-bind:key="key">수입 {{ key }} : {{ value }}</div>
-          </div>
+          <!-- <div id="graphdetails">
+            <div v-for="(value, key) in incomeitems" v-bind:key="key">
+              
+            </div>
+          </div> -->
         </div>
       </section>
-
       <footer class="modal-footer">
-     
         <slot name="footer">
-         <form class="post_send" method="POST">
-          <button type="submit" class="btn btn-success" >공유하기</button>
-         </form>
-          <button type="button" class="btn-green" @click="close">취소</button>
+          <form class="post_send" method="POST">
+            <button type="submit" class="btn btn-success">공유하기</button>
+          </form>
+          <button type="button" class="btn btn-green" @click="close">취소</button>
         </slot>
-        
       </footer>
     </div>
   </div>
@@ -85,10 +112,11 @@
 // 프라이빗 따옴
 import Vue from "vue";
 import VueC3 from "vue-c3";
-import Datepicker from "vuejs-datepicker";
-import { ko } from "vuejs-datepicker/dist/locale";
 import "c3/c3.min.css";
 import moment from "moment";
+import Datepicker from "vuejs-datepicker";
+import { ko } from "vuejs-datepicker/dist/locale";
+import axios from "axios";
 
 export default {
   name: "modal",
@@ -96,7 +124,6 @@ export default {
     VueC3,
     datepicker: Datepicker
   },
-
   data() {
     return {
       msg: "wwww",
@@ -106,6 +133,7 @@ export default {
       search_term: "",
       termfrom: "",
       termto: "",
+      showDatePicker: false,
       myDataVariable: true,
       incomeitems: {
         "20%": "주식회사ㅇㅇ 4,000,000원",
@@ -117,7 +145,6 @@ export default {
         "40%": "ㅇㅇ투자상품 1,100,000원",
         "20%": "적금상품 800,000원"
       },
-      range: ["", ""],
       options: {
         timePicker: false,
         // startDate: moment().startOf('day'),
@@ -126,14 +153,22 @@ export default {
           format: "YYYY/MM/DD"
         }
       },
-      asset: "1,000,000"
+      asset: "1,000,000",
+      ko: ko,
+      tabflag: 1
     };
   },
   methods: {
-    close() {
-      this.$emit("close");
-    },
     showIncomeGraph: function() {
+      //Jsondata 이름이랑 %출력
+      // var dataList = []
+      // for(var i =0; i < Object.keys(this.incomeitems).length; i++){
+      //   var rowData = []
+      //   rowData['income_amt'] = this.incomeitems[i].income_amt
+      //   rowData['income_keyword'] = this.incomeitems[i].income_keyword
+      //   dataList.push(rowData)
+      // }
+
       let options = {
         data: {
           type: "donut",
@@ -144,9 +179,7 @@ export default {
             ["Water", 50]
           ],
           colors: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"],
-          // jason:[
-          //   this.graphdataList
-          // ],
+          // json: dataList,
           label: {
             color: "#ffffff",
             position: "start",
@@ -182,7 +215,7 @@ export default {
           ],
           colors: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"],
           // jason:[
-          //   this.graphdataList
+          //   this.expenditureitems
           // ],
           label: {
             color: "#ffffff",
@@ -214,35 +247,108 @@ export default {
         this.termfrom = moment(this.termto)
           .subtract(1, "month")
           .format("YYYY/MM/DD");
+        this.showDatePicker = false;
+        if (this.tabflag == 0) {
+          document
+            .getElementById("amonth")
+            .setAttribute("style", "color:#fff;background-color:#fcaf17");
+        }
       } else if (value == 3) {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(3, "month")
           .format("YYYY/MM/DD");
+        this.showDatePicker = false;
+        this.tabflag = 0;
+        document
+          .getElementById("amonth")
+          .setAttribute("style", "color:#000;background-color:#fff");
       } else if (value == 6) {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(6, "month")
           .format("YYYY/MM/DD");
+        this.showDatePicker = false;
+        this.tabflag = 0;
+        document
+          .getElementById("amonth")
+          .setAttribute("style", "color:#000;background-color:#fff");
       } else if (value == 12) {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(12, "month")
           .format("YYYY/MM/DD");
+        this.showDatePicker = false;
+        this.tabflag = 0;
+        document
+          .getElementById("amonth")
+          .setAttribute("style", "color:#000;background-color:#fff");
       } else if (value == 99) {
         this.search_term = value;
-        this.termfrom = moment(this.termto)
-          .subtract(1, "month")
-          .format("YYYY/MM/DD");
+        this.showDatePicker = true;
+        this.tabflag = 0;
+        document
+          .getElementById("amonth")
+          .setAttribute("style", "color:#000;background-color:#fff");
       }
+    },
+    setDateFormat(date) {
+      return moment(date).format("YYYY/MM/DD");
+    },
+    execSearch: function() {
+      this.termto = moment(this.termto).format("YYYY/MM/DD");
+      this.termfrom = moment(this.termfrom).format("YYYY/MM/DD");
+    },
+    GetUserMonthData: function() {
+      // var termto = moment(this.termto).format('YYYYMMDD')
+      // var termfrom = moment(this.termfrom).format('YYYYMMDD')
+      axios
+        .get(`http://192.168.160.50:3000/main`, {
+          //파라미터추가
+          // fromdate: termfrom,
+          // todate: termto,
+        })
+        .then(
+          response => {
+            console.log(response);
+            // this.incomeitems = response.data.income
+            // this.expenditureitems = response.data.spending
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    },
+    scrollInfinite: function(e) {
+      console.log("스크롤되고있다");
+      var scrollBody = e.target.scrollingElement;
+      var clientHeight = Math.floor(scrollBody.clientHeight);
+      var scroll_body = Math.floor(scrollBody.scrollHeight) - clientHeight;
+      var scroll_top = Math.floor(scrollBody.scrollTop);
+      var percent_of_scroll = Math.floor((scroll_top / scroll_body) * 100);
+
+      if (this.$route.path == "/MainContent") {
+        if (percent_of_scroll >= 98) {
+          var self = this;
+          setTimeout(function() {
+            self.GetUserPastData();
+          }, 300);
+        }
+      }
+    },
+    GetUserPastData: function() {
+      console.log("스크롤 감지후 호출됨");
     }
   },
+  
+
+
   created() {
     //테스트데이터
     this.graphdataList = ["30%", "20%"];
 
     //기간표시 초기값
-  
+    this.setTerm(1);
     this.termto = moment(new Date()).format("YYYY/MM/DD");
     this.termfrom = moment(this.termto)
       .subtract(1, "month")
@@ -252,6 +358,16 @@ export default {
     //그래프 값 변화시 표시
     this.showIncomeGraph();
     this.showExpenditureGraph();
+
+    this.GetUserMonthData();
+    window.addEventListener("scroll", this.scrollInfinite);
+
+    //초기 탭 클릭표시
+    if (this.tabflag == 1) {
+      document
+        .getElementById("amonth")
+        .setAttribute("style", "color:#fff;background-color:#fcaf17");
+    }
   }
 };
 </script>
@@ -307,23 +423,6 @@ export default {
   overflow: scroll;
 }
 
-.btn-close {
-  border: none;
-  font-size: 20px;
-  padding: 20px;
-  cursor: pointer;
-  font-weight: bold;
-  color:#4e473f;
-  background: transparent;
-}
-
-.btn-green {
-  color: white;
-  background: #4aae9b;
-  border: 1px solid #4aae9b;
-  border-radius: 2px;
-}
-
 h1,
 h2 {
   font-weight: normal;
@@ -342,11 +441,106 @@ a {
 p {
   margin-top: 3%;
 }
-#available p {
+
+div#tag_group {
+  float: left;
+  font-size: 15px;
+  width: 50%;
+  margin-left: 23%;
+}
+textarea#write {
   width: 100%;
+  height: 20%;
+  font-size: larger;
+  margin-bottom: 3%;
+}
+
+p#user_id {
+  font-size: large;
+  font-weight: bolder;
+  width: 5%;
+}
+
+.userdata {
+  overflow: scroll;
+}
+
+.btn-success {
+  width: 350px;
+  height: 100%;
+  margin-top: 5px;
+  margin-right: 5px;
+  font-size: large;
+  font-weight: bold;
+  background-color: #7c7363;
+  border-color: #7c7363;
+}
+
+.btn-green {
+  margin-right: 5%;
+  height: 100%;
+  margin-top: 5px;
+  width: 20%;
+  font-size: initial;
+  font-weight: bold;
+  color: white;
+  background-color: #4e473f;
+  border-color: #4e473f;
+}
+
+input#write_date {
+  width: 30%;
+  border: none;
+  margin-left: 20%;
+  float: right;
+  text-align: end;
+}
+p#header_subject {
+  float: left;
+  margin-top: -5px;
+  margin-left: -5px;
+  background-color: blanchedalmond;
+  color: initial;
+}
+
+/* 프라이빗과 통일 */
+p#incomedetails {
+  width: 100%;
+  /* right: 5%; */
+  padding-right: 65%;
+}
+p#incomeamnt {
+  width: 100%;
+  /* right: 5%; */
+  padding-left: 30%;
+}
+.vdp-datepicker {
+  text-align: center;
+  width: 39%;
+  float: left;
+}
+.datepicker-group {
+  width: 25%;
+  float: left;
+  text-align: center;
+  padding-left: 1%;
+}
+.datepicker-group-btn {
+  width: 10%;
+  float: left;
+  padding-left: 4px;
+}
+.fromto {
+  width: 10%;
+  float: left;
+  text-align: center;
+}
+#available p {
+  width: 96%;
   font-size: 21px;
   text-align: center;
   color: #fcaf17;
+  border-style: outset;
 }
 input#calendar {
   border-radius: 6px;
@@ -367,10 +561,11 @@ label {
   font-size: 9px;
 }
 .toggle {
-  width: 42%;
+  width: auto;
   text-align: right;
   float: left;
-  margin-left: 11%;
+  position: initial;
+  margin-left: 18%;
 }
 .toggle span {
   font-size: 9px;
@@ -384,13 +579,22 @@ label {
 }
 .user_data {
   box-shadow: 0px 0px 0px 1px grey;
-  width: -webkit-fill-available;
+}
+#amonth {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-right: -4px;
+  float: left;
+  width: 15%;
 }
 #btn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  margin-right: -4px;
   float: left;
   width: 15%;
 }
@@ -400,23 +604,40 @@ label {
   color: rgb(74, 76, 77);
   padding: 5px;
   margin-bottom: 2%;
+  margin-right: 1px;
+  width: 19.5%;
 }
-#btn:active,
-#btn:visited,
-#btn:hover {
+#amonth:active,
+#amonth:focus,
+#amonth:hover #amonth:visited {
   color: white;
   background-color: #fcaf17;
 }
+#btn:active,
+#btn:focus,
+#btn:hover #btn:visited {
+  color: white;
+  background-color: #fcaf17;
+}
+#graph {
+  width: 100%;
+}
 #Piegraph {
   position: relative;
-
+  width: 30%;
+  height: 300px;
   float: left;
+  margin-top: -15%;
+  margin-left: 5%;
 }
 #graphdetails {
-  width: 35%;
+  width: 50%;
+  height: 350px;
   float: left;
   font-size: 0.8em;
   margin-top: 2%;
+  border-style: outset;
+  margin-left: 15%;
 }
 #title {
   position: absolute;
@@ -425,82 +646,5 @@ label {
   left: 45%;
   width: 15%;
   float: left;
-}
-
-div#tag_group {
-    float: left;
-    font-size: 15px;
-    width: 50%;
-    margin-left: 23%;
-
-}
-textarea#write {
-  width: 100%;
-  height: 20%;
-  font-size: larger;
-  margin-bottom: 3%;
-}
-
-p#user_id {
-  font-size: large;
-  font-weight: bolder;
-  width: 5%;
-}
-
-.toggle {
-  width: 28%;
-  text-align: right;
-  float: left;
-}
-.toggle span {
-  font-size: 9px;
-  font-weight: 100;
-  margin-right: 2%;
-}
-
-.userdata {
-  overflow: scroll;
-}
-
-.btn-success {
-  width: 350px;
-  height: 100%;
-  margin-top: 5px;
-  margin-right: 5px;
-  font-size: large;
-  font-weight: bold;
-  background-color: #7c7363;
-  border-color: #7c7363;
-
-}
-
-.btn-green {
-  margin-right: 5%;
-  height: 100%;
-  margin-top: 5px;
-  width: 20%;
-  font-size: initial;
-  background-color: #4e473f;
-  border-color: #4e473f;
-}
-
-div#Piegraph {
-  width: 30%;
-  margin-inline-start: 30%;
-}
-
-input#write_date {
-    width: 30%;
-    border: none;
-    margin-left: 20%;
-    float: right;
-    text-align: end;
-}
-p#header_subject{
-  float: left;
-    margin-top: -5px;
-    margin-left: -5px;
-    background-color: blanchedalmond;
-    color: initial;
 }
 </style>
