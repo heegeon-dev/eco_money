@@ -159,6 +159,9 @@ export default {
     };
   },
   methods: {
+    close() {
+      this.$emit("close");
+    },
     showIncomeGraph: function() {
       //Jsondata 이름이랑 %출력
       // var dataList = []
