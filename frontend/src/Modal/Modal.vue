@@ -12,59 +12,63 @@
 
           <div id="tag_group">
             <div id="user_hash" v-for="hash in userHashList" v-bind:key="hash">
-            <p id="user_hash">{{hash}}</p>
-           
-          </div>
-        </div>
-        <textarea
-          id="write"
-          style="width:95%; heigth:80%"
-          placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
-        >{{textFeed}}</textarea>
-        <div class="userdata" v-on:scroll="scrollInfinite($event)">
-          <div id="btn_group">
-            <button id="amonth" v-on:click="setTerm(1)">1개월</button>
-            <button id="btn" v-on:click="setTerm(3)">3개월</button>
-            <button id="btn" v-on:click="setTerm(6)">6개월</button>
-            <button id="btn" v-on:click="setTerm(12)">12개월</button>
-            <button id="btn" v-on:click="setTerm(99)">조건검색</button>
-          </div>
-          <div class="datepicker" v-if="showDatePicker">
-            <div class="datepicker-group">
-              <datepicker
-                v-model="termfrom"
-                :format="setDateFormat"
-                :language="ko"
-                placeholder="시작일"
-              ></datepicker>
-            </div>
-            <div class="fromto">~</div>
-            <div class="datepicker-group">
-              <datepicker v-model="termto" :format="setDateFormat" :language="ko" placeholder="종료일"></datepicker>
-            </div>
-            <div class="datepicker-group-btn">
-              <button
-                type="button"
-                class="btn btn-default btn-sm btn-login btn-info"
-                @click="execSearch()"
-              >검색</button>
+              <p id="user_hash">{{hash}}</p>
             </div>
           </div>
-          <div id="termandonoff">
-            <div class="term" v-if="!showDatePicker">
-              <input class="termfromto" type="text" v-model="termfrom">
-              ~
-              <input class="termfromto" type="text" v-model="termto">
+          <textarea
+            id="write"
+            style="width:95%; heigth:80%"
+            placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
+          >{{textFeed}}</textarea>
+          <div class="userdata" v-on:scroll="scrollInfinite($event)">
+            <div id="btn_group">
+              <button id="amonth" v-on:click="setTerm(1)">1개월</button>
+              <button id="btn" v-on:click="setTerm(3)">3개월</button>
+              <button id="btn" v-on:click="setTerm(6)">6개월</button>
+              <button id="btn" v-on:click="setTerm(12)">12개월</button>
+              <button id="btn" v-on:click="setTerm(99)">조건검색</button>
             </div>
-            <div class="toggle">
-              <span>상세금액 표기</span>
-              <toggle-button v-model="myDataVariable" color="#fcaf17"/>
+            <div class="datepicker" v-if="showDatePicker">
+              <div class="datepicker-group">
+                <datepicker
+                  v-model="termfrom"
+                  :format="setDateFormat"
+                  :language="ko"
+                  placeholder="시작일"
+                ></datepicker>
+              </div>
+              <div class="fromto">~</div>
+              <div class="datepicker-group">
+                <datepicker
+                  v-model="termto"
+                  :format="setDateFormat"
+                  :language="ko"
+                  placeholder="종료일"
+                ></datepicker>
+              </div>
+              <div class="datepicker-group-btn">
+                <button
+                  type="button"
+                  class="btn btn-default btn-sm btn-login btn-info"
+                  @click="execSearch()"
+                >검색</button>
+              </div>
             </div>
-          </div>
-          <!-- <div id="available">
+            <div id="termandonoff">
+              <div class="term" v-if="!showDatePicker">
+                <input class="termfromto" type="text" v-model="termfrom">
+                ~
+                <input class="termfromto" type="text" v-model="termto">
+              </div>
+              <div class="toggle">
+                <span>상세금액 표기</span>
+                <toggle-button v-model="myDataVariable" color="#fcaf17"/>
+              </div>
+            </div>
+            <!-- <div id="available">
             <p>예상 한달 가용 자산 : {{ asset }} 원</p>
-          </div>-->
-        </div>
+            </div>-->
+          </div>
         </div>
         <!-- </slot> -->
       </header>
@@ -75,19 +79,15 @@
             <p id="title">수입</p>
           </div>
           <div id="graphdetails">
-            <div v-for="(value) in incomeName" v-bind:key="value" id="incomedetails">
-              <p>{{ value }}</p>
-            </div>
             <div v-for="(value) in incomeAmount" v-bind:key="value" id="incomeamnt">
-              <p>수입{{ value }}</p>
-              <div v-for="(value) in expenditureName" v-bind:key="value" id="incomedetails">
-                <p>{{ value }}</p>
-              </div>
-              <div v-for="(value) in expenditureAmount" v-bind:key="value" id="incomeamnt">
-                <p>지출 {{ value }}</p>
-              </div>
-              <p>예상 한달 가용 자산 : {{ asset }} 원</p>
+              <p>수입</p>
             </div>
+
+            <div v-for="(value) in expenditureAmount" v-bind:key="value" id="incomeamnt">
+              <p>지출 {{ value }}</p>
+            </div>
+
+            <p id="avail">예상 한달 가용 자산 : {{ asset }} 원</p>
           </div>
         </div>
         <div id="graph">
@@ -102,6 +102,7 @@
           </div>-->
         </div>
       </section>
+
       <footer class="modal-footer">
         <slot name="footer">
           <form class="post_send" method="POST">
@@ -149,12 +150,12 @@ export default {
       expenditureAmount: [],
       incomeitems: [],
       expenditureitems: [],
-      userName:'',
-      hashLish:[],
-      userHashList:[],
-      userHash:'',
-      userId:"",
-      textFeed:[],
+      userName: "",
+      hashLish: [],
+      userHashList: [],
+      userHash: "",
+      userId: "",
+      textFeed: [],
 
       options: {
         timePicker: false,
@@ -330,7 +331,8 @@ export default {
       // var termfrom = moment(this.termfrom).format('YYYYMMDD')
       // console.log("this.termfrom",this.termfrom)
       // console.log("this.termto",this.termto)
-      axios.post(
+      axios
+        .post(
           `http://192.168.160.50:3000/main`,
 
           {
@@ -343,76 +345,83 @@ export default {
           }
         )
         .then(
-          (response) => { 
-              this.responseList = JSON.parse(response.data)
-              this.incomeitems = this.responseList[0]
-              this.expenditureitems = this.responseList.spending
+          response => {
+            this.responseList = JSON.parse(response.data);
+            this.incomeitems = this.responseList[0];
+            this.expenditureitems = this.responseList.spending;
 
-              console.log("incomeitems",this.incomeitems)
-              // console.log("this.incomeitems",this.incomeitems[1])
-              // console.log("this.expenditureitems",this.expenditureitems)
-              //수입내역
-              this.incomeTotal = this.responseList[0][0]
-              this.incomeName = this.responseList[0][1]
-              this.incomeAmount = this.responseList[0][2]
-              //지출내역
-              this.expenditureTotal = this.responseList[1][0]
-              this.expenditureName = this.responseList[1][1]
-              this.expenditureAmount = this.responseList[1][2]
+            console.log("incomeitems", this.incomeitems);
+            // console.log("this.incomeitems",this.incomeitems[1])
+            // console.log("this.expenditureitems",this.expenditureitems)
+            //수입내역
+            this.incomeTotal = this.responseList[0][0];
+            this.incomeName = this.responseList[0][1];
+            this.incomeAmount = this.responseList[0][2];
+            //지출내역
+            this.expenditureTotal = this.responseList[1][0];
+            this.expenditureName = this.responseList[1][1];
+            this.expenditureAmount = this.responseList[1][2];
 
-              console.log("incomeTotal",this.incomeTotal)
-              console.log("incomeName",this.incomeName)
-              console.log("GetUserMonthData_incomeAmount",this.incomeAmount)
-              console.log("왔나??")
-              this.showIncomeGraph()
-              this.showExpenditureGraph()
-            },
-            (error) => { console.log(error) }
-        )
+            console.log("incomeTotal", this.incomeTotal);
+            console.log("incomeName", this.incomeName);
+            console.log("GetUserMonthData_incomeAmount", this.incomeAmount);
+            console.log("왔나??");
+            this.showIncomeGraph();
+            this.showExpenditureGraph();
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
-    GetUserData: function () {
-
-      axios.get(`http://192.168.160.50:3000/side`, 
-        {
+    GetUserData: function() {
+      axios
+        .get(`http://192.168.160.50:3000/side`, {
           //파라미터
           params: {
-            uid:this.userId
+            uid: this.userId
           }
-        }).then(
-            (response) => { 
-                this.userDataList = JSON.parse(response.data)
-                this.hashList = this.userDataList.hashtag
-                this.userHashList = this.userDataList.phashtag
-                this.userGoal = this.userDataList.goal
-                this.userName = this.userDataList.nickname
-            },
-            (error) => { console.log(error) }
-        )
+        })
+        .then(
+          response => {
+            this.userDataList = JSON.parse(response.data);
+            this.hashList = this.userDataList.hashtag;
+            this.userHashList = this.userDataList.phashtag;
+            this.userGoal = this.userDataList.goal;
+            this.userName = this.userDataList.nickname;
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
-     UpdateUserData: function () {
-      console.log("userHash",this.userHash)
-      if(this.userHash !==''){
-        this.userHashList.push(this.userHash)
-      } 
-      console.log("updateFlg",this.updateFlg)
-      console.log("inputHashtag",this.userHashList)
-      console.log("goal",this.userGoal)
+    UpdateUserData: function() {
+      console.log("userHash", this.userHash);
+      if (this.userHash !== "") {
+        this.userHashList.push(this.userHash);
+      }
+      console.log("updateFlg", this.updateFlg);
+      console.log("inputHashtag", this.userHashList);
+      console.log("goal", this.userGoal);
 
-      axios.get(`http://192.168.160.50:3000/side-update`, 
-        {
-          update_flag:this.updateFlg,
-          inputHashtag:this.userHashList,
-          goal:this.userGoal,
-        }).then(
-            (response) => { 
-              this.shouldDisable = true
-              this.editBtn = false
-              this.addHash = false
-              this.addHashInput = false
-              this.userHash = ""
-            },
-            (error) => { console.log(error) }
-        )
+      axios
+        .get(`http://192.168.160.50:3000/side-update`, {
+          update_flag: this.updateFlg,
+          inputHashtag: this.userHashList,
+          goal: this.userGoal
+        })
+        .then(
+          response => {
+            this.shouldDisable = true;
+            this.editBtn = false;
+            this.addHash = false;
+            this.addHashInput = false;
+            this.userHash = "";
+          },
+          error => {
+            console.log(error);
+          }
+        );
     },
 
     scrollInfinite: function(e) {
@@ -535,6 +544,7 @@ a {
 }
 p {
   margin-top: 3%;
+  width: unset;
 }
 
 div#tag_group {
@@ -553,7 +563,7 @@ textarea#write {
 p#user_id {
   font-size: large;
   font-weight: bolder;
-  width: 5%;
+  width: unset;
 }
 
 .userdata {
@@ -734,8 +744,7 @@ label {
   float: left;
   font-size: 0.8em;
   margin-top: 2%;
-  border-style: outset;
-  margin-left: 15%;
+  
 }
 #title {
   position: absolute;
@@ -744,5 +753,13 @@ label {
   left: 45%;
   width: 15%;
   float: left;
+}
+
+p#avail {
+      margin-top: 100%;
+}
+
+#incomeamnt[data-v-11d137c2]{
+  
 }
 </style>
