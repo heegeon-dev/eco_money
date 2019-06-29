@@ -96,14 +96,15 @@
 
           <section>
             <div class="feed-comment-area">
-              <form class="feed-comment-post" method="POST">
+              <!-- <form class="feed-comment-post" method="POST"> -->
+                <ul id="reply"></ul>
                 <textarea id="comment_form" placeholder="Add a comment…"></textarea>
                 <button 
                   id="bt_post"
                   type="submit"
-                  class="btn btn-success"
+                  class="btn btn-success" v-on:click=makeReply
                 >Post</button>
-              </form>
+              <!-- </form> -->
             </div>
           </section>
         </slot>
@@ -112,6 +113,7 @@
   </div>
 </template>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 // 프라이빗 따옴
 import Vue from "vue";
@@ -163,6 +165,10 @@ export default {
   methods: {
     close() {
       this.$emit("close");
+    },
+    makeReply: function(){
+      $("#reply").append("<li>"+$("#comment_form").val()+"</li>");
+      $("#comment_form").val("");
     },
     showIncomeGraph: function() {
       let options = {
