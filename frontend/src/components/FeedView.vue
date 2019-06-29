@@ -6,24 +6,24 @@
           <div id="user_data">
             <img id="user_img" src="../assets/3.png">
             <section id="bubble">
-            <div class="rec">
-             <div class="before">
-            <p id="user_id">UserName</p>
-            <input class="termfromto" id="write_date" type="form" v-model="termto">
+              <div class="rec">
+                <div class="before">
+                  <p id="user_id">UserName</p>
+                  <input class="termfromto" id="write_date" type="form" v-model="termto">
 
-            <div id="tag_group">
-              <p id="user_hash">#연봉0000</p>
-              <p id="user_hash">#행복대출</p>
-              <p id="user_hash">#3년적금</p>
-              <p id="user_hash">#자동차대출</p>
-              <p id="user_hash">#포르쉐</p>
-              <p id="user_hash">#반포자이</p>
-            </div>
-                 </div>
-                  <div class="after"></div>
-                    <div class="middle"></div>
-                    <div class="small"></div>
-            </div>
+                  <div id="tag_group">
+                    <p id="user_hash">#연봉0000</p>
+                    <p id="user_hash">#행복대출</p>
+                    <p id="user_hash">#3년적금</p>
+                    <p id="user_hash">#자동차대출</p>
+                    <p id="user_hash">#포르쉐</p>
+                    <p id="user_hash">#반포자이</p>
+                  </div>
+                </div>
+                <div class="after"></div>
+                <div class="middle"></div>
+                <div class="small"></div>
+              </div>
             </section>
           </div>
           <textarea id="write" style="width:95%; heigth:80%"></textarea>
@@ -72,40 +72,37 @@
 
       <footer class="feed-footer">
         <slot name="footer">
-        <form class="feed-comment-btn" method="POST">
-          <section class="“feed-comment”">
-            <div id="btn_group2">
-            
-              <button id="btn2">
-                
+          <form class="feed-comment-btn" method="POST">
+            <section class="“feed-comment”">
+              <div id="btn_group2">
+                <button id="btn2">
                   <img id="like" src="../assets/like.png">
-                
-              </button>
-            
-              <button id="btn2">
-                <img id="like" src="../assets/comment.png">
-              </button>
-          
-              <button id="btn2">
-            
+                </button>
+
+                <button id="btn2">
+                  <img id="like" src="../assets/comment.png">
+                </button>
+
+                <button id="btn2">
                   <img id="like" src="../assets/bookmark.png">
-               
-              </button>
-           
-            </div>
-         
-          </section>
-        </form>
+                </button>
+              </div>
+            </section>
+          </form>
 
           <!-- <div class="“feed-comment-time”">
             <input class="termfromto" id="write_date" type="form" v-model="termto">
-          </div> -->
+          </div>-->
 
           <section>
             <div class="feed-comment-area">
               <form class="feed-comment-post" method="POST">
                 <textarea id="comment_form" placeholder="Add a comment…"></textarea>
-                <button type="submit">Post</button>
+                <button 
+                  id="bt_post"
+                  type="submit"
+                  class="btn btn-success"
+                >Post</button>
               </form>
             </div>
           </section>
@@ -276,7 +273,7 @@ export default {
     this.graphdataList = ["30%", "20%"];
 
     //기간표시 초기값
-  
+
     this.termto = moment(new Date()).format("YYYY/MM/DD");
     this.termfrom = moment(this.termto)
       .subtract(1, "month")
@@ -378,8 +375,8 @@ p {
 }
 
 img#like {
-    width: 15px;
-    height:15px;
+  width: 15px;
+  height: 15px;
 }
 #available p {
   width: 100%;
@@ -424,7 +421,6 @@ label {
 .user_data {
   box-shadow: 0px 0px 0px 1px grey;
   width: -webkit-fill-available;
-  
 }
 #btn {
   border-top-left-radius: 5px;
@@ -458,7 +454,7 @@ button#btn2 {
   background-color: #fcaf17;
 }
 
- #Piegraph {
+#Piegraph {
   position: relative;
   float: left;
 }
@@ -489,11 +485,10 @@ textarea#write {
   height: 20%;
   font-size: larger;
   margin-bottom: 3%;
-  
 }
 
-div#graph{
-    padding: 5%;
+div#graph {
+  padding: 5%;
 }
 
 p#user_id {
@@ -511,7 +506,6 @@ p#user_id {
   font-size: 9px;
   font-weight: 100;
   margin-right: 2%;
-
 }
 
 .userdata {
@@ -536,45 +530,52 @@ p#user_id {
 }
 
 input#write_date {
-    width: 30%;
-    border: none;
-    margin-left: 20%;
-    float: right;
-    text-align: end;
+  width: 30%;
+  border: none;
+  margin-left: 20%;
+  float: right;
+  text-align: end;
 }
 
-.feed-body{
-    display: flex;
-    margin-top: -10%;
-    margin-bottom: -15px;
+.feed-body {
+  display: flex;
+  margin-top: -10%;
+  margin-bottom: -15px;
 }
 
-div#graphdetails{
-    margin-top: -60%;
-    margin-left: 50%;
+div#graphdetails {
+  margin-top: -60%;
+  margin-left: 50%;
 }
 
-.feed-footer{
-    margin-top: 1%;
+.feed-footer {
+  margin-top: 1%;
 }
 
 #feed-view {
-     overflow: scroll;
+  overflow: scroll;
+
 }
 
-
-
-#feed-comment{
-    margin-left: 30%;
+#feed-comment {
+  margin-left: 30%;
 }
 
-textarea#comment_form{
-        width: 60%;
+textarea#comment_form {
+  width: 60%;
 }
 
-div#btn_group2{
-    display: flex;
-    margin-bottom: 10px;
-    width: 100%;
+div#btn_group2 {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+button#bt_post{
+ margin-top: -20px;
+ width: auto; font-size: larger;
+ font-weight: bold;
+ background-color: #7c7363;
+ border-color: #7c7363;
 }
 </style>
