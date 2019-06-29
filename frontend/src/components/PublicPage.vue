@@ -33,7 +33,7 @@
           <section class="write-body">
             <slot name="body"></slot>
             <div id="feedview_page">
-              <newPost v-if="postfeed=true"/>
+              <!-- <newPost v-if="postfeed=true"/> -->
               <div id="no_feed" v-if="postfeed=false">
                 <p>컨텐츠가 없습니다. 게시글을 남겨보세요!</p>
               </div>
