@@ -1,68 +1,114 @@
--- user(uid,email,password,upicture,uname,apihashtag,inputhashtag,goal)
-insert into user(email,password,nickname,phashtag,hashtag,goal) values("user1@gmail.com","user1","user1","#[국민은행] 국민수퍼정기예금(개인)#[국민은행] KB Star 정기예금#[국민은행] 국민수퍼정기예금 (CD금리연동형)#[국민은행] KB골든라이프연금저축신탁 (안정형), #[국민은행] KB 매직카대출)",null,null);
-insert into user(email,password,nickname,phashtag,hashtag,goal) values("user2@gmail.com","user2","user2","[국민은행] KB Smart★폰 예금, [국민은행] KB국민UP정기예금, [국민은행] KB 러시아 대표성장주 증권 자투자신탁(주식)-C-E, [국민은행] KB골든라이프연금저축신탁 (채권형), [국민은행] KB Star 신용대출",null,null);
-insert into user(email,password,nickname,phashtag,hashtag,goal) values("user3@gmail.com","user3","user3","[국민은행] KB국민첫재테크예금, [국민은행] KB골든라이프연금우대예금, [국민은행] KB실버웰빙연금저축신탁 (안정형), [국민은행] KB Star 모기지론",null,null);
-insert into user(email,password,nickname,phashtag,hashtag,goal) values("user4@gmail.com","user4","user4","[국민은행] KB펀드와만나는예금, [국민은행] 일반정기예금, [국민은행] DB 글로벌 핀테크 증권자투자신탁 UH(주식) AE, [국민은행] KB실버웰빙연금저축신탁 (채권형)",null,null);
-insert into user(email,password,nickname,phashtag,hashtag,goal) values("user5@gmail.com","user5","user5","[국민은행] KB Young Youth 증여예금, [국민은행] 국민수퍼정기예금 (CD금리연동형), [국민은행] DB 글로벌 핀테크 증권자투자신탁 UH(주식) CE, [국민은행] KB비과세파도타기시스템 주식형신탁",null,null);
+insert into user (email, password, upicture, uname, apihashtag, inputhastag, goal) values ('email@naver.com','1234','프로필사진','닉네임','#자동차대출#부동산대출','#제네시스G70','1억');
+insert into user (email, password, upicture, uname, apihashtag, inputhastag, goal) values ('abc@naver.com','1234','프로필사진','닉네임','#예금#펀드','#쏘나타','10억');
+insert into user (email, password, upicture, uname, apihashtag, inputhastag, goal) values ('hihi@naver.com','1234','프로필사진','닉네임','#적금#부동산대출','#그랜저','5억');
 
--- account(ano,bank,uid)
-insert into account values("11111111111","국민은행",1);
-insert into account values("22222222222","국민은행",2);
-insert into account values("33333333333","국민은행",3);
-insert into account values("44444444444","국민은행",4);
-insert into account values("55555555555","국민은행",5);
-
-/*
-CREATE TABLE POST (
-	PNO      INTEGER NOT NULL auto_increment primary key, -- 게시물번호
-	UID      INTEGER  NOT NULL, -- 유저ID
-	contents VARCHAR(5000) NULL      -- 내용
-);
-*/
-
-INSERT INTO POST(uid,contents) values(1,"첫번째");
-INSERT INTO POST(uid,contents) values(1,"두번째");
-INSERT INTO POST(uid,contents) values(1,"세번째");
-INSERT INTO POST(uid,contents) values(2,"네번째");
-INSERT INTO POST(uid,contents) values(2,"다섯번째");
+insert into account(account_no,UID) values(987654321,1);
+insert into account(account_no,UID) values(543123145,1);
+insert into account(account_no,UID) values(223456654,1);
 
 
--- like(lno,pno,uid)
-insert into likes(uid,pno) values(1,1);
-insert into likes(uid,pno) values(1,2);
-insert into likes(uid,pno) values(1,3);
-insert into likes(uid,pno) values(1,4);
-insert into likes(uid,pno) values(1,5);
-insert into likes(uid,pno) values(2,1);
-insert into likes(uid,pno) values(2,2);
-insert into likes(uid,pno) values(2,3);
-insert into likes(uid,pno) values(2,4);
-insert into likes(uid,pno) values(2,5);
-insert into likes(uid,pno) values(3,1);
-insert into likes(uid,pno) values(3,2);
-insert into likes(uid,pno) values(3,3);
-insert into likes(uid,pno) values(3,4);
-insert into likes(uid,pno) values(3,5);
-/*
-insert into bookmark values(null,1,1);
-insert into bookmark values(null,1,2);
-insert into bookmark values(null,1,3);
-insert into bookmark values(null,1,4);
-insert into bookmark values(null,1,5);
-insert into bookmark values(null,2,1);
-insert into bookmark values(null,2,2);
-insert into bookmark values(null,2,3);
-insert into bookmark values(null,2,4);
-insert into bookmark values(null,2,5);
-insert into bookmark values(null,3,1);
-insert into bookmark values(null,3,2);
-insert into bookmark values(null,3,3);
-insert into bookmark values(null,3,4);
-insert into bookmark values(null,3,5);
-
-insert into product values("[국민은행] 국민수퍼정기예금(개인)","kb-00001","2018-03-10 14:30:22");
-insert into product values("[국민은행] KB Star 정기예금","kb-00002","2018-03-10 14:30:22");
-insert into product values("[국민은행] KB골든라이프연금저축신탁","kb-00003","2018-03-10 14:30:22");
-insert into product values("[국민은행] KB국민첫재테크예금","kb-00004","2018-03-10 14:30:22");
-insert into product values("[국민은행] KB펀드와만나는예금","kb-00005","2018-03-10 14:30:22");
-*/ 
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-26','015101','입금','투자','00펀드','100000000','30000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','통신','통신료','2000000','4000000','KB분당정자점', 987654321);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-27','010101','출금','공과금','전기세','3000000','7000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-26','010101','출금','임대료','임대료','5000000','1000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-10','010101','출금','통신','통신료','5000000','15000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-05','010101','출금','카드대금','KB카드 대금','2000000','15000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-15','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 987654321);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-12','010101','출금','대출','KB국민은행 대출이자','15000000','25000000','KB분당정자점', 987654321);
+-------------------------------------------------------------------------------------------------------------
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-26','015101','입금','투자','00펀드','100000000','30000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','공과금','수도세','2000000','4000000','KB분당정자점', 543123145);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-27','010101','출금','공과금','전기세','3000000','7000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-26','010101','출금','보험','보험료','5000000','1000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-10','010101','출금','통신','통신료','5000000','15000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-05','010101','출금','카드대금','KB카드 대금','2000000','15000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-10','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-01','010101','출금','대출','KB국민은행 대출이자','15000000','25000000','KB분당정자점', 543123145);
+--------------------------------------------------------------------------------------------------------
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-26','015101','입금','채권','00채권형','100000000','30000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','공과금','수도세','154000','40000','KB분당정자점', 543123145);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-27','010101','출금','적금','KB종합통장-보통적금','250000','700000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-26','010101','출금','보험','보험료','770000','100000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-10','010101','출금','통신','통신료','800000','1550000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-05','010101','출금','기타','인건비','2700000','18000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-10','010101','출금','임대료','임대료','1520000','5100000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-06-01','010101','출금','적금','KB종합통장-저축예금료','180000','2500000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-26','015101','입금','투자','00펀드','100000000','30000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','통신','통신료','2000000','4000000','KB분당정자점', 123456789);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-27','010101','출금','공과금','전기세','3000000','7000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-26','010101','출금','임대료','임대료','5000000','1000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-10','010101','출금','통신','통신료','5000000','15000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-05','010101','출금','카드대금','KB카드 대금','2000000','15000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-15','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-12','010101','출금','대출','KB국민은행 대출이자','15000000','25000000','KB분당정자점', 123456789);
+--------------------------------------------------------------------------------------------------------------
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-26','015101','입금','투자','00펀드','100000000','30000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','공과금','수도세','2000000','4000000','KB분당정자점', 543123145);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-27','010101','출금','공과금','전기세','3000000','7000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-26','010101','출금','보험','보험료','5000000','1000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-10','010101','출금','통신','통신료','5000000','15000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-05','010101','출금','카드대금','KB카드 대금','2000000','15000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-10','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-05-01','010101','출금','대출','KB국민은행 대출이자','15000000','25000000','KB분당정자점', 543123145);
+--------------------------------------------------------------------------------------------------------
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-26','015101','입금','채권','00채권형','100000000','30000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','공과금','수도세','154000','40000','KB분당정자점', 543123145);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-27','010101','출금','적금','KB종합통장-보통적금','250000','700000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-26','010101','출금','보험','보험료','770000','100000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-10','010101','출금','통신','통신료','800000','1550000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-05','010101','출금','기타','인건비','2700000','18000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-10','010101','출금','임대료','임대료','1520000','5100000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-01','010101','출금','적금','KB종합통장-저축예금료','180000','2500000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-27','010101','입금','급여','00월급','2500000','70000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-26','015101','입금','투자','00펀드','100000000','30000000','KB분당정자점', 123456789); 
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','통신','통신료','2000000','4000000','KB분당정자점', 123456789);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-27','010101','출금','공과금','전기세','2000000','7000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-26','010101','출금','임대료','임대료','200000','1000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-10','010101','출금','통신','통신료','900000','15000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-05','010101','출금','카드대금','KB카드 대금','700000','15000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-15','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-12','010101','출금','대출','KB국민은행 대출이자','15000','25000000','KB분당정자점', 123456789);
+---------------------------------------------------------------------------------
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-27','010101','입금','급여','월급','1200000','70000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-26','015101','입금','채권','00채권형','100000000','30000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','공과금','수도세','2000000','4000000','KB분당정자점', 543123145);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-27','010101','출금','공과금','전기세','2000000','7000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-26','010101','출금','보험','보험료','200000','1000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-10','010101','출금','통신','통신료','1000000','15000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-05','010101','출금','카드대금','KB카드 대금','2000000','15000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-10','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-04-01','010101','출금','대출','KB국민은행 대출이자','300000','25000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-27','010101','입금','급여','월급','250000000','70000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-26','015101','입금','채권','00채권형','100000000','30000000','KB분당정자점',  223456654);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','공과금','수도세','154000','40000','KB분당정자점', 543123145);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-27','010101','출금','적금','KB종합통장-보통적금','250000','700000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-26','010101','출금','보험','보험료','770000','100000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-10','010101','출금','통신','통신료','800000','1550000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-05','010101','출금','기타','인건비','2700000','18000000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-10','010101','출금','임대료','임대료','1520000','5100000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-01','010101','출금','적금','KB종합통장-저축예금료','180000','2500000','KB분당정자점', 543123145);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'010101','입금','급여','oo상여금','200000000','50000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-27','010101','입금','급여','00월급','2500000','70000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-26','015101','입금','투자','00펀드','100000000','30000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values(now(),'015101','출금','통신','통신료','2000000','4000000','KB분당정자점', 123456789);   
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-27','010101','출금','공과금','전기세','2000000','7000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-26','010101','출금','임대료','임대료','200000','1000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-10','010101','출금','통신','통신료','900000','15000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-05','010101','출금','카드대금','KB카드 대금','700000','15000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-15','010101','출금','임대료','임대료','1000000','5000000','KB분당정자점', 123456789);
+insert into deal (tran_date, tran_time, inout_type, tran_type, print_content, tran_amt, after_balance_amt, branch_name, account_no) values('2019-03-12','010101','출금','대출','KB국민은행 대출이자','15000','25000000','KB분당정자점', 123456789);

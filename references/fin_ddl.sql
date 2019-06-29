@@ -11,61 +11,94 @@ DROP TABLE POST;
 DROP TABLE ACCOUNT;
 
 -- 금융상품상세
-DROP TABLE PRODUCT;
+DROP TABLE my_PRODUCT;
 
 -- 유저user
 DROP TABLE USER;
 
+DROP TABLE deal;
+ 
+ drop table detail_product;
+ 
 -- 게시물
 CREATE TABLE POST (
-	PNO      INTEGER NOT NULL auto_increment primary key, -- 게시물번호
-	UID      INTEGER  NOT NULL, -- 유저ID
-	contents VARCHAR(5000) NULL      -- 내용
+   PNO      INTEGER NOT NULL auto_increment primary key, -- 게시물번호
+   UID      INTEGER  NOT NULL, -- 유저ID
+   contents VARCHAR(5000) not NULL,      -- 내용
+    gp_inc_tot VARCHAR(255) not NULL,     -- 그래프 수입 전체
+    gp_int_keywd VARCHAR(255) not NULL,   -- 그래프 수입 키워드
+    gp_inc_amt VARCHAR(255) not NULL,     -- 그래프 수입 금액
+    gp_spd_tot VARCHAR(255) not NULL,
+    gp_spd_keywd VARCHAR(255) not NULL,   -- 그래프 소비 키워드
+    gp_spd_amt VARCHAR(255) not NULL,      -- 그래프 소비 금액
+    reg_date date,  -- 등록날짜 ,
+	apihashtag VARCHAR(500) NOT NULL,
+    inputhastag VARCHAR(500) NOT NULL    
 );
 
 -- 댓글
 CREATE TABLE Reply (
-	RID		 integer	primary key auto_increment,
-	contents VARCHAR(5000) NULL, -- 내용
-	PNO      INTEGER       NULL, -- 게시물번호
-	UID      INTEGER       NULL  -- 유저ID
+   RID       integer   primary key auto_increment,
+   contents VARCHAR(5000) NULL, -- 내용
+   PNO      INTEGER       NULL, -- 게시물번호
+   UID      INTEGER       NULL  -- 유저ID
 );
 
 
 -- 금융상품상세
-CREATE TABLE PRODUCT (
-	PNAME VARCHAR(1023) NOT NULL, -- 상품명
-	date  DATE          NULL,     -- 상품등록일
-	code  VARCHAR(255)  primary key     -- 상품코드
+CREATE TABLE MY_PRODUCT (
+   pname VARCHAR(1023) NOT NULL, -- 상품명
+   UID   INTEGER  NOT NULL,
+   pdate  DATE     NOT NULL,     -- 상품등록일
+   pcode  VARCHAR(255)  primary key     -- 상품코드
+    
+    
 );
+
+create table DETAIL_PRODUCT (
+    pname VARCHAR(1023) NOT NULL, -- 상품명
+    pdate  DATE NOT NULL,     -- 상품등록일
+   pcode  VARCHAR(255)  primary key     -- 상품코드
+
+);
+
 
 -- 좋아요
 CREATE TABLE LIKEs (
-	LNO		 INTEGER primary key auto_increment,
-	UID      INTEGER  NOT NULL, -- 유저ID
-	contents VARCHAR(5000) NULL,     -- 내용
-	PNO      INTEGER  NOT NULL  -- 게시물번호
+   likes_no INTEGER  auto_increment primary key,
+   UID      INTEGER  NOT NULL, -- 유저ID
+   contents VARCHAR(5000) NULL,     -- 내용
+   PNO      INTEGER  NOT NULL  -- 게시물번호
 );
 
 -- 계좌 정보
 CREATE TABLE ACCOUNT (
-	ANO  VARCHAR(255) NOT NULL, -- 계좌번호
-	bank VARCHAR(255) NULL,     -- 은행
-	UID  INTEGER NOT NULL  -- 유저ID
+   account_no INTEGER NOT NULL, -- 계좌번호
+   UID  INTEGER NOT NULL  -- 유저ID
 );
 
 -- 유저
 CREATE TABLE USER (
-	UID      INTEGER NOT NULL auto_increment primary key, -- 유저ID
-	email    VARCHAR(255) NOT NULL, -- ID
-	password VARCHAR(255) NOT NULL,  -- 비밀번호
-    nickname varchar(255),
-	hashtag  VARCHAR(255),
-    phashtag varchar(255),
-    goal	 VARCHAR(255),
-    userseqnum VARCHAR(255),
-    accessToken VARCHAR(255),
-    refreshToken VARCHAR(255)
+   UID      INTEGER NOT NULL auto_increment primary key, -- 유저ID
+   email    VARCHAR(255) NOT NULL, -- ID
+   password VARCHAR(255) NOT NULL,  -- 비밀번호
+    upicture VARCHAR(255) NOT NULL,
+    uname    VARCHAR(50) NOT NULL,
+    apihashtag VARCHAR(500) NOT NULL,
+    inputhastag VARCHAR(500) NOT NULL,
+    goal       VARCHAR(500) 
+);
+
+create table deal (
+            tran_date date not null,
+            tran_time varchar(255) not null,
+            inout_type varchar(255) not null,
+            tran_type varchar(255) not null,
+            print_content varchar(255) not null,
+            tran_amt INTEGER not null,
+            after_balance_amt INTEGER not null,
+            branch_name varchar(255),
+            account_no varchar(255)
 );
 
 -- 게시물
