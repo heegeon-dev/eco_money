@@ -66,7 +66,7 @@
           </div>
           <!-- <div id="available">
             <p>예상 한달 가용 자산 : {{ asset }} 원</p>
-          </div> -->
+          </div>-->
         </div>
         <!-- </slot> -->
       </header>
@@ -94,7 +94,7 @@
             <div v-for="(value, key) in incomeitems" v-bind:key="key">
               
             </div>
-          </div> -->
+          </div>-->
         </div>
       </section>
       <footer class="modal-footer">
@@ -340,8 +340,6 @@ export default {
       console.log("스크롤 감지후 호출됨");
     }
   },
-  
-
 
   created() {
     //테스트데이터
