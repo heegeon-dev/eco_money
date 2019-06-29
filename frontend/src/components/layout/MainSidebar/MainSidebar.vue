@@ -269,7 +269,7 @@ li.item.active{
   float: left;
   margin-left: 28%;
   margin-top: 9%;
-  box-shadow: 0px 0px 0px 1px grey;
+  /* box-shadow: 0px 0px 0px 1px grey; */
 }
 div#termandonoff {
   padding: 2%;
