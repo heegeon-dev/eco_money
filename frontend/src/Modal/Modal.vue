@@ -2,10 +2,13 @@
   <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
+        <p id="header_subject">게시글 쓰기 </p>
         <slot name="header">
           <div id="user_data">
             <img id="user_img" src="../assets/3.png">
+            
             <p id="user_id">UserName</p>
+             <input class="termfromto" id="write_date" type="form" v-model="termto">
 
             <div id="tag_group">
               <p id="user_hash">#연봉0000</p>
@@ -66,10 +69,14 @@
       </section>
 
       <footer class="modal-footer">
+     
         <slot name="footer">
-          <button type="submit" class="btn btn-success">공유하기</button>
+         <form class="post_send" method="POST">
+          <button type="submit" class="btn btn-success" >공유하기</button>
+         </form>
           <button type="button" class="btn-green" @click="close">취소</button>
         </slot>
+        
       </footer>
     </div>
   </div>
@@ -235,7 +242,7 @@ export default {
     this.graphdataList = ["30%", "20%"];
 
     //기간표시 초기값
-    write_date.termto = moment(new Date()).format("YYYY/MM/DD");
+  
     this.termto = moment(new Date()).format("YYYY/MM/DD");
     this.termfrom = moment(this.termto)
       .subtract(1, "month")
@@ -456,7 +463,7 @@ p#user_id {
 }
 
 .btn-success {
-  width: 70%;
+  width: 350px;
   height: 100%;
   margin-top: 5px;
   margin-right: 5px;
@@ -475,5 +482,20 @@ p#user_id {
 div#Piegraph {
   width: 30%;
   margin-inline-start: 30%;
+}
+
+input#write_date {
+    width: 30%;
+    border: none;
+    margin-left: 20%;
+    float: right;
+    text-align: end;
+}
+p#header_subject{
+  float: left;
+    margin-top: -5px;
+    margin-left: -5px;
+    background-color: blanchedalmond;
+    color: initial;
 }
 </style>
