@@ -7,23 +7,20 @@
         <div id="user_data">
           <img id="user_img" src="../assets/3.png">
 
-          <p id="user_id">UserName</p>
+          <p id="user_id">{{userName}}</p>
           <input class="termfromto" id="write_date" type="form" v-model="termto">
 
           <div id="tag_group">
-            <p id="user_hash">#연봉0000</p>
-            <p id="user_hash">#행복대출</p>
-            <p id="user_hash">#3년적금</p>
-            <p id="user_hash">#자동차대출</p>
-            <p id="user_hash">#포르쉐</p>
-            <p id="user_hash">#반포자이</p>
+            <div id="user_hash" v-for="hash in userHashList" v-bind:key="hash">
+            <p id="user_hash">{{hash}}</p>
+           
           </div>
         </div>
         <textarea
           id="write"
           style="width:95%; heigth:80%"
           placeholder="목표금액 달성을 자랑하거나, 대출상품을 문의 하는 등 다양한 게시글을 #해쉬태그와 함께 남겨보세요."
-        ></textarea>
+        >{{textFeed}}</textarea>
         <div class="userdata" v-on:scroll="scrollInfinite($event)">
           <div id="btn_group">
             <button id="amonth" v-on:click="setTerm(1)">1개월</button>
@@ -67,6 +64,7 @@
           <!-- <div id="available">
             <p>예상 한달 가용 자산 : {{ asset }} 원</p>
           </div>-->
+        </div>
         </div>
         <!-- </slot> -->
       </header>
@@ -151,6 +149,12 @@ export default {
       expenditureAmount: [],
       incomeitems: [],
       expenditureitems: [],
+      userName:'',
+      hashLish:[],
+      userHashList:[],
+      userHash:'',
+      userId:"",
+      textFeed:[],
 
       options: {
         timePicker: false,
@@ -190,7 +194,7 @@ export default {
         data: {
           type: "donut",
           colors: {
-          pattern: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"]
+            pattern: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"]
           },
           columns: this.incomedataList,
 
@@ -326,8 +330,7 @@ export default {
       // var termfrom = moment(this.termfrom).format('YYYYMMDD')
       // console.log("this.termfrom",this.termfrom)
       // console.log("this.termto",this.termto)
-      axios
-        .post(
+      axios.post(
           `http://192.168.160.50:3000/main`,
 
           {
@@ -340,37 +343,78 @@ export default {
           }
         )
         .then(
-          response => {},
-          error => {
-            console.log(error);
-            this.responseList = JSON.parse(response.data);
-            this.incomeitems = this.responseList[0];
-            this.expenditureitems = this.responseList.spending;
+          (response) => { 
+              this.responseList = JSON.parse(response.data)
+              this.incomeitems = this.responseList[0]
+              this.expenditureitems = this.responseList.spending
 
-            console.log("incomeitems", this.incomeitems);
-            // console.log("this.incomeitems",this.incomeitems[1])
-            // console.log("this.expenditureitems",this.expenditureitems)
-            //수입내역
-            this.incomeTotal = this.responseList[0][0];
-            this.incomeName = this.responseList[0][1];
-            this.incomeAmount = this.responseList[0][2];
-            //지출내역
-            this.expenditureTotal = this.responseList[1][0];
-            this.expenditureName = this.responseList[1][1];
-            this.expenditureAmount = this.responseList[1][2];
+              console.log("incomeitems",this.incomeitems)
+              // console.log("this.incomeitems",this.incomeitems[1])
+              // console.log("this.expenditureitems",this.expenditureitems)
+              //수입내역
+              this.incomeTotal = this.responseList[0][0]
+              this.incomeName = this.responseList[0][1]
+              this.incomeAmount = this.responseList[0][2]
+              //지출내역
+              this.expenditureTotal = this.responseList[1][0]
+              this.expenditureName = this.responseList[1][1]
+              this.expenditureAmount = this.responseList[1][2]
 
-            console.log("incomeTotal", this.incomeTotal);
-            console.log("incomeName", this.incomeName);
-            console.log("GetUserMonthData_incomeAmount", this.incomeAmount);
-            console.log("왔나??");
-            this.showIncomeGraph();
-            this.showExpenditureGraph();
-          },
-          error => {
-            console.log(error);
-          }
-        );
+              console.log("incomeTotal",this.incomeTotal)
+              console.log("incomeName",this.incomeName)
+              console.log("GetUserMonthData_incomeAmount",this.incomeAmount)
+              console.log("왔나??")
+              this.showIncomeGraph()
+              this.showExpenditureGraph()
+            },
+            (error) => { console.log(error) }
+        )
     },
+    GetUserData: function () {
+
+      axios.get(`http://192.168.160.50:3000/side`, 
+        {
+          //파라미터
+          params: {
+            uid:this.userId
+          }
+        }).then(
+            (response) => { 
+                this.userDataList = JSON.parse(response.data)
+                this.hashList = this.userDataList.hashtag
+                this.userHashList = this.userDataList.phashtag
+                this.userGoal = this.userDataList.goal
+                this.userName = this.userDataList.nickname
+            },
+            (error) => { console.log(error) }
+        )
+    },
+     UpdateUserData: function () {
+      console.log("userHash",this.userHash)
+      if(this.userHash !==''){
+        this.userHashList.push(this.userHash)
+      } 
+      console.log("updateFlg",this.updateFlg)
+      console.log("inputHashtag",this.userHashList)
+      console.log("goal",this.userGoal)
+
+      axios.get(`http://192.168.160.50:3000/side-update`, 
+        {
+          update_flag:this.updateFlg,
+          inputHashtag:this.userHashList,
+          goal:this.userGoal,
+        }).then(
+            (response) => { 
+              this.shouldDisable = true
+              this.editBtn = false
+              this.addHash = false
+              this.addHashInput = false
+              this.userHash = ""
+            },
+            (error) => { console.log(error) }
+        )
+    },
+
     scrollInfinite: function(e) {
       // console.log("스크롤되고있다");
       var scrollBody = e.target.scrollingElement;
@@ -396,7 +440,7 @@ export default {
   created() {
     //테스트데이터
     this.userId = this.$store.getters["auth/uId"];
-
+    this.GetUserData();
     this.graphdataList = ["30%", "20%"];
 
     //기간표시 초기값
@@ -556,15 +600,16 @@ p#header_subject {
 
 /* 프라이빗과 통일 */
 #incomedetails {
-    width: 50%;
-    float: left;
-    /*right: 5%; 
+  width: 65%;
+  float: left;
+  margin-left: 5%;
+  /*right: 5%; 
     padding-right: 65%;*/
 }
 #incomeamnt {
-    width: 50%;
-    float: left;
-    /*right: 5%; 
+  width: 50%;
+  float: left;
+  /*right: 5%; 
     padding-left: 30%;*/
 }
 .vdp-datepicker {
