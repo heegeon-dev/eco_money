@@ -89,17 +89,31 @@
             <section class="“feed-comment”">
               <div id="btn_group2">
                 <form>
-                <input type="image" src="../assets/like.png" @click="btCount" id="like" >
+                  <input type="image" src="../assets/like.png" @click="btCount" id="like">
                 </form>
 
                 <form>
-                <!-- <button id="btn2"> -->
-                  <input type="button" @click="btCount" class="btn btn2" img id="like" src="../assets/comment.png">
+                  <!-- <button id="btn2"> -->
+                  <input
+                    type="button"
+                    @click="btCount"
+                    class="btn btn2"
+                    img
+                    id="like"
+                    src="../assets/comment.png"
+                  >
                 </form>
 
                 <form>
-                <!-- <button id="btn2"> -->
-                  <input type="button" @click="btCount" class="btn btn2" img id="like" src="../assets/bookmark.png">
+                  <!-- <button id="btn2"> -->
+                  <input
+                    type="button"
+                    @click="btCount"
+                    class="btn btn2"
+                    img
+                    id="like"
+                    src="../assets/bookmark.png"
+                  >
                 </form>
               </div>
             </section>
@@ -112,19 +126,11 @@
           <section>
             <div class="feed-comment-area">
               <!-- <form class="feed-comment-post" method="POST"> -->
-                <ul id="reply"></ul>
-                <textarea id="comment_form" placeholder="Add a comment…"></textarea>
-<<<<<<< HEAD
-                <button 
-                  id="bt_post"
-                  type="submit"
-                  class="btn btn-success" v-on:click=makeReply
-                >Post</button>
+              <ul id="reply"></ul>
+              <textarea id="comment_form" placeholder="Add a comment…"></textarea>
+
+              <button id="bt_post" type="submit" class="btn btn-success" v-on:click="makeReply">Post</button>
               <!-- </form> -->
-=======
-                <button id="bt_post" type="submit" class="btn btn-success">Post</button>
-              </form>
->>>>>>> 71fab69fc886bd61f82968b9d3d7d4a55f5214dc
             </div>
           </section>
         </slot>
@@ -152,7 +158,6 @@ export default {
   },
   data() {
     return {
-
       msg: "wwww",
       handler: new Vue(),
       ExpenditureHandler: new Vue(),
@@ -189,18 +194,14 @@ export default {
   },
   methods: {
     btCount: function() {
-      var count=0;
+      var count = 0;
       count++;
-
     },
-<<<<<<< HEAD
-    makeReply: function(){
-      $("#reply").append("<li>"+$("#comment_form").val()+"</li>");
+    makeReply: function() {
+      $("#reply").append("<li>" + $("#comment_form").val() + "</li>");
       $("#comment_form").val("");
     },
-=======
 
->>>>>>> 71fab69fc886bd61f82968b9d3d7d4a55f5214dc
     showIncomeGraph: function() {
       var keylist = [];
 
