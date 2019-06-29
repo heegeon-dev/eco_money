@@ -77,11 +77,18 @@
             <p id="title">수입</p>
           </div>
           <div id="graphdetails">
-            <div v-for="(value, key) in incomeitems" v-bind:key="key">
-              <p id="incomedetails">수입 {{ key }} :</p>
-              <p id="incomeamnt">{{ value }}</p>
-              <p id="incomedetails">지출 {{ key }} :</p>
-              <p id="incomeamnt">{{ value }}</p>
+            <div v-for="(value) in incomeName" v-bind:key="value" id="incomedetails">
+              <p>{{ value }}</p>
+            </div>
+            <div v-for="(value) in incomeAmount" v-bind:key="value" id="incomeamnt">
+              <p>수입{{ value }}</p>
+              <div v-for="(value) in expenditureName" v-bind:key="value" id="incomedetails">
+                <p>{{ value }}</p>
+              </div>
+              <div v-for="(value) in expenditureAmount" v-bind:key="value" id="incomeamnt">
+                <p>지출 {{ value }}</p>
+              </div>
+              <p>예상 한달 가용 자산 : {{ asset }} 원</p>
             </div>
           </div>
         </div>
@@ -117,6 +124,7 @@ import moment from "moment";
 import Datepicker from "vuejs-datepicker";
 import { ko } from "vuejs-datepicker/dist/locale";
 import axios from "axios";
+import FeedViewVue from "../components/FeedView.vue";
 
 export default {
   name: "modal",
@@ -135,54 +143,57 @@ export default {
       termto: "",
       showDatePicker: false,
       myDataVariable: true,
-      incomeitems: {
-        "20%": "주식회사ㅇㅇ 4,000,000원",
-        "40%": "ㅇㅇ투자상품 1,100,000원",
-        "20%": "적금상품 800,000원"
-      },
-      expenditureitems: {
-        "20%": "주식회사ㅇㅇ 4,000,000원",
-        "40%": "ㅇㅇ투자상품 1,100,000원",
-        "20%": "적금상품 800,000원"
-      },
+      incomeTotal: "",
+      incomeName: [],
+      incomeAmount: [],
+      expenditureTotal: "",
+      expenditureName: [],
+      expenditureAmount: [],
+      incomeitems: [],
+      expenditureitems: [],
+
       options: {
         timePicker: false,
         // startDate: moment().startOf('day'),
         // endDate: moment().startOf('day'),
         locale: {
-          format: "YYYY/MM/DD"
+          format: "YYYY-MM-DD"
         }
       },
+
+      responseList: [],
       asset: "1,000,000",
       ko: ko,
-      tabflag: 1
+      userId: "",
+      tabflag: 1,
+      incomedataList: [],
+      expenditureList: []
     };
   },
   methods: {
+    // 입력받은
+    sendPost() {
+      this.target(FeedViewVue);
+    },
     close() {
       this.$emit("close");
     },
     showIncomeGraph: function() {
-      //Jsondata 이름이랑 %출력
-      // var dataList = []
-      // for(var i =0; i < Object.keys(this.incomeitems).length; i++){
-      //   var rowData = []
-      //   rowData['income_amt'] = this.incomeitems[i].income_amt
-      //   rowData['income_keyword'] = this.incomeitems[i].income_keyword
-      //   dataList.push(rowData)
-      // }
+      var keylist = [];
+
+      for (var i = 0; i < Object.keys(this.incomeAmount).length; i++) {
+        this.incomedataList[i] = [this.incomeName[i], this.incomeAmount[i]];
+        keylist.push(this.incomeName[i]);
+      }
 
       let options = {
         data: {
           type: "donut",
-          columns: [
-            ["Office", 20],
-            ["Work", 30],
-            ["School", 40],
-            ["Water", 50]
-          ],
-          colors: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"],
-          // json: dataList,
+          colors: {
+          pattern: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"]
+          },
+          columns: this.incomedataList,
+
           label: {
             color: "#ffffff",
             position: "start",
@@ -191,35 +202,33 @@ export default {
             }
           },
           keys: {
-            value: ["Man", "Woman"]
-          },
-          groups: [["Man", "Woman"]],
-          names: {
-            Man: "남자",
-            Woman: "여자"
+            value: keylist
           }
         },
         legend: {
-          //position:'right'
           show: false
         }
       };
       this.handler.$emit("init", options);
     },
     showExpenditureGraph: function() {
+      var keylist = [];
+
+      for (var i = 0; i < Object.keys(this.expenditureAmount).length; i++) {
+        this.expenditureList[i] = [
+          this.expenditureName[i],
+          this.expenditureAmount[i]
+        ];
+        keylist.push(this.expenditureName[i]);
+      }
+
       let options = {
         data: {
           type: "donut",
-          columns: [
-            ["Office", 20],
-            ["Work", 30],
-            ["School", 40],
-            ["Water", 50]
-          ],
-          colors: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"],
-          // jason:[
-          //   this.expenditureitems
-          // ],
+          columns: this.expenditureList,
+          colors: {
+            pattern: ["#0080ff", "#03A6FF", "#1EC0FF", "#A3DAFF", "#d3e0f7"]
+          },
           label: {
             color: "#ffffff",
             position: "start",
@@ -228,12 +237,7 @@ export default {
             }
           },
           keys: {
-            value: ["Man", "Woman"]
-          },
-          groups: [["Man", "Woman"]],
-          names: {
-            Man: "남자",
-            Woman: "여자"
+            value: keylist
           }
         },
         legend: {
@@ -249,43 +253,55 @@ export default {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(1, "month")
-          .format("YYYY/MM/DD");
+          .format("YYYY-MM-DD");
         this.showDatePicker = false;
         if (this.tabflag == 0) {
           document
             .getElementById("amonth")
             .setAttribute("style", "color:#fff;background-color:#fcaf17");
+          this.GetUserMonthData();
         }
+        // console.log("setTerm1.termfrom",this.termfrom)
+        // console.log("setTerm1.termto",this.termto)
       } else if (value == 3) {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(3, "month")
-          .format("YYYY/MM/DD");
+          .format("YYYY-MM-DD");
         this.showDatePicker = false;
         this.tabflag = 0;
         document
           .getElementById("amonth")
           .setAttribute("style", "color:#000;background-color:#fff");
+        // console.log("setTerm2.termfrom",this.termfrom)
+        // console.log("setTerm2.termto",this.termto)
+        this.GetUserMonthData();
       } else if (value == 6) {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(6, "month")
-          .format("YYYY/MM/DD");
+          .format("YYYY-MM-DD");
         this.showDatePicker = false;
         this.tabflag = 0;
         document
           .getElementById("amonth")
           .setAttribute("style", "color:#000;background-color:#fff");
+        // console.log("setTerm3.termfrom",this.termfrom)
+        // console.log("setTerm3.termto",this.termto)
+        this.GetUserMonthData();
       } else if (value == 12) {
         this.search_term = value;
         this.termfrom = moment(this.termto)
           .subtract(12, "month")
-          .format("YYYY/MM/DD");
+          .format("YYYY-MM-DD");
         this.showDatePicker = false;
         this.tabflag = 0;
         document
           .getElementById("amonth")
           .setAttribute("style", "color:#000;background-color:#fff");
+        // console.log("setTerm4.termfrom",this.termfrom)
+        // console.log("setTerm4.termto",this.termto)
+        this.GetUserMonthData();
       } else if (value == 99) {
         this.search_term = value;
         this.showDatePicker = true;
@@ -296,26 +312,59 @@ export default {
       }
     },
     setDateFormat(date) {
-      return moment(date).format("YYYY/MM/DD");
+      return moment(date).format("YYYY-MM-DD");
     },
     execSearch: function() {
-      this.termto = moment(this.termto).format("YYYY/MM/DD");
-      this.termfrom = moment(this.termfrom).format("YYYY/MM/DD");
+      this.termto = moment(this.termto).format("YYYY-MM-DD");
+      this.termfrom = moment(this.termfrom).format("YYYY-MM-DD");
+      // console.log("setTerm5.termfrom",this.termfrom)
+      // console.log("setTerm5.termto",this.termto)
+      this.GetUserMonthData();
     },
     GetUserMonthData: function() {
       // var termto = moment(this.termto).format('YYYYMMDD')
       // var termfrom = moment(this.termfrom).format('YYYYMMDD')
+      // console.log("this.termfrom",this.termfrom)
+      // console.log("this.termto",this.termto)
       axios
-        .get(`http://192.168.160.50:3000/main`, {
-          //파라미터추가
-          // fromdate: termfrom,
-          // todate: termto,
-        })
+        .post(
+          `http://192.168.160.50:3000/main`,
+
+          {
+            //파라미터
+            params: {
+              uid: this.userId,
+              fromdate: this.termfrom,
+              todate: this.termto
+            }
+          }
+        )
         .then(
-          response => {
-            console.log(response);
-            // this.incomeitems = response.data.income
-            // this.expenditureitems = response.data.spending
+          response => {},
+          error => {
+            console.log(error);
+            this.responseList = JSON.parse(response.data);
+            this.incomeitems = this.responseList[0];
+            this.expenditureitems = this.responseList.spending;
+
+            console.log("incomeitems", this.incomeitems);
+            // console.log("this.incomeitems",this.incomeitems[1])
+            // console.log("this.expenditureitems",this.expenditureitems)
+            //수입내역
+            this.incomeTotal = this.responseList[0][0];
+            this.incomeName = this.responseList[0][1];
+            this.incomeAmount = this.responseList[0][2];
+            //지출내역
+            this.expenditureTotal = this.responseList[1][0];
+            this.expenditureName = this.responseList[1][1];
+            this.expenditureAmount = this.responseList[1][2];
+
+            console.log("incomeTotal", this.incomeTotal);
+            console.log("incomeName", this.incomeName);
+            console.log("GetUserMonthData_incomeAmount", this.incomeAmount);
+            console.log("왔나??");
+            this.showIncomeGraph();
+            this.showExpenditureGraph();
           },
           error => {
             console.log(error);
@@ -323,7 +372,7 @@ export default {
         );
     },
     scrollInfinite: function(e) {
-      console.log("스크롤되고있다");
+      // console.log("스크롤되고있다");
       var scrollBody = e.target.scrollingElement;
       var clientHeight = Math.floor(scrollBody.clientHeight);
       var scroll_body = Math.floor(scrollBody.scrollHeight) - clientHeight;
@@ -340,27 +389,28 @@ export default {
       }
     },
     GetUserPastData: function() {
-      console.log("스크롤 감지후 호출됨");
+      // console.log("스크롤 감지후 호출됨");
     }
   },
 
   created() {
     //테스트데이터
+    this.userId = this.$store.getters["auth/uId"];
+
     this.graphdataList = ["30%", "20%"];
 
     //기간표시 초기값
     this.setTerm(1);
-    this.termto = moment(new Date()).format("YYYY/MM/DD");
+    this.termto = moment(new Date()).format("YYYY-MM-DD");
     this.termfrom = moment(this.termto)
       .subtract(1, "month")
-      .format("YYYY/MM/DD");
+      .format("YYYY-MM-DD");
+    //this.showIncomeGraph();
+    this.GetUserMonthData();
   },
   mounted() {
     //그래프 값 변화시 표시
-    this.showIncomeGraph();
-    this.showExpenditureGraph();
-
-    this.GetUserMonthData();
+    // this.GetUserMonthData();
     window.addEventListener("scroll", this.scrollInfinite);
 
     //초기 탭 클릭표시
@@ -505,15 +555,17 @@ p#header_subject {
 }
 
 /* 프라이빗과 통일 */
-p#incomedetails {
-  width: 100%;
-  /* right: 5%; */
-  padding-right: 65%;
+#incomedetails {
+    width: 50%;
+    float: left;
+    /*right: 5%; 
+    padding-right: 65%;*/
 }
-p#incomeamnt {
-  width: 100%;
-  /* right: 5%; */
-  padding-left: 30%;
+#incomeamnt {
+    width: 50%;
+    float: left;
+    /*right: 5%; 
+    padding-left: 30%;*/
 }
 .vdp-datepicker {
   text-align: center;

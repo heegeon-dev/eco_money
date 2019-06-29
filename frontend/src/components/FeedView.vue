@@ -88,17 +88,19 @@
           <form class="feed-comment-btn" method="POST">
             <section class="“feed-comment”">
               <div id="btn_group2">
-                <button id="btn2">
-                  <img id="like" src="../assets/like.png">
-                </button>
+                <form>
+                <input type="image" src="../assets/like.png" @click="btCount" id="like" >
+                </form>
 
-                <button id="btn2">
-                  <img id="like" src="../assets/comment.png">
-                </button>
+                <form>
+                <!-- <button id="btn2"> -->
+                  <input type="button" @click="btCount" class="btn btn2" img id="like" src="../assets/comment.png">
+                </form>
 
-                <button id="btn2">
-                  <img id="like" src="../assets/bookmark.png">
-                </button>
+                <form>
+                <!-- <button id="btn2"> -->
+                  <input type="button" @click="btCount" class="btn btn2" img id="like" src="../assets/bookmark.png">
+                </form>
               </div>
             </section>
           </form>
@@ -139,6 +141,7 @@ export default {
   },
   data() {
     return {
+
       msg: "wwww",
       handler: new Vue(),
       ExpenditureHandler: new Vue(),
@@ -174,6 +177,12 @@ export default {
     };
   },
   methods: {
+    btCount: function() {
+      var count=0;
+      count++;
+
+    },
+
     showIncomeGraph: function() {
       var keylist = [];
 
@@ -496,7 +505,7 @@ p {
   margin-top: 3%;
 }
 
-img#like {
+#like {
   width: 15px;
   height: 15px;
 }

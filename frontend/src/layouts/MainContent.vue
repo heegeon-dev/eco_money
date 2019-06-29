@@ -44,4 +44,5 @@ export default {
 </script>
 
 <style>
+background-color: #fffbf2;
 </style>
