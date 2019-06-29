@@ -313,7 +313,7 @@ export default {
   padding: 20px;
   cursor: pointer;
   font-weight: bold;
-  color: #4aae9b;
+  color:#4e473f;
   background: transparent;
 }
 
@@ -469,6 +469,9 @@ p#user_id {
   margin-right: 5px;
   font-size: large;
   font-weight: bold;
+  background-color: #7c7363;
+  border-color: #7c7363;
+
 }
 
 .btn-green {
@@ -477,6 +480,8 @@ p#user_id {
   margin-top: 5px;
   width: 20%;
   font-size: initial;
+  background-color: #4e473f;
+  border-color: #4e473f;
 }
 
 div#Piegraph {
