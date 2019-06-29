@@ -26,7 +26,7 @@
               </div>
             </section>
           </div>
-          <textarea id="write" style="width:95%; heigth:80%"></textarea>
+          <textarea id="write" style="width:95%; heigth:80%">{{textFeed}}</textarea>
           <div class="userdata" v-on:scroll="scrollInfinite($event)">
             <div id="btn_group">
               <button id="amonth" v-on:click="setTerm(1)">1개월</button>
@@ -83,46 +83,30 @@
           </div>-->
         </div>
       </section>
-      <footer class="feed-footer">
+            <footer class="feed-footer">
         <slot name="footer">
-          <form class="feed-comment-btn" method="POST">
-            <section class="“feed-comment”">
+        <form class="feed-comment-btn" method="POST">
+          <section class="“feed-comment”">
+
               <div id="btn_group2">
-                <form>
-                  <input type="button" src="../assets/like.png" @click="btCount" id="like">
-                </form>
-
-                <form>
-                  <!-- <button id="btn2"> -->
-                  <input
-                    type="button"
-                    @click="btCount"
-                    class="btn btn2"
-                    img
-                    id="like"
-                    src="../assets/comment.png"
-                  >
-                </form>
-
-                <form>
-                  <!-- <button id="btn2"> -->
-                  <input
-                    type="button"
-                    @click="btCount"
-                    class="btn btn2"
-                    img
-                    id="like"
-                    src="../assets/bookmark.png"
-                  >
-                </form>
-              </div>
-            </section>
-          </form>
-
-          <!-- <div class="“feed-comment-time”">
-            <input class="termfromto" id="write_date" type="form" v-model="termto">
-          </div>-->
-
+                         
+              <button id="btn2">
+                
+                  <img id="like" src="../assets/like.png">
+                
+              </button>
+                            <button id="btn2">
+                <img id="like" src="../assets/comment.png">
+                              </button>
+                                        
+              <button id="btn2">
+            
+                  <img id="like" src="../assets/bookmark.png">
+               
+              </button>
+            </div>
+                      </section>
+        </form>
           <section>
             <div class="feed-comment-area">
               <!-- <form class="feed-comment-post" method="POST"> -->
@@ -177,6 +161,7 @@ export default {
       expenditureAmount: [],
       incomeitems: [],
       expenditureitems: [],
+      textFeed: [],
 
       options: {
         timePicker: false,
@@ -412,7 +397,8 @@ export default {
     this.userId = this.$store.getters["auth/uId"];
 
     this.graphdataList = ["30%", "20%"];
-
+   //모달에서 값
+  //  this.textFeed = this.userDataList.
     //기간표시 초기값
     this.setTerm(1);
     this.termto = moment(new Date()).format("YYYY-MM-DD");
