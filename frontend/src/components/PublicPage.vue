@@ -34,8 +34,12 @@
             <slot name="body"></slot>
             <div id="feedview_page">
               <!-- <newPost v-if="postfeed=true"/> -->
-              <div id="no_feed" v-if="postfeed=false">
-                <p>컨텐츠가 없습니다. 게시글을 남겨보세요!</p>
+              <div id="no_feed">
+                <p style=" font-size: 20px;
+                          width: 100%;">
+                  컨텐츠가 없습니다.
+                  게시글을 남겨보세요!
+                </p>
               </div>
             </div>
           </section>
@@ -95,8 +99,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 div#pub_write {
-  
-
 }
 
 h1,
@@ -148,6 +150,15 @@ textarea#write {
   border: none;
   width: 90%;
   margin-top: 6%;
+}
+
+div#write {
+  border-radius: inherit;
+  border-style: groove;
+}
+
+div#no_feed {
+  margin-top: 20%;
 }
 
 header#show-modal {
