@@ -148,9 +148,10 @@ export default {
       this.keyword = keyword
       console.log("keyword",this.keyword)
       if(this.keyword =="" || this.keyword ==null || this.keyword ==undefined){
-        this.keyword =="none"
+        this.keyword ==""
       }
       this.$store.commit('auth/setSearchText', this.keyword)
+      this.$store.commit('auth/searchFlag', 1)
       this.ChangeTab(2)
     },
     chageLangSelect: function () {
@@ -163,6 +164,9 @@ export default {
       axios.get(`http://192.168.160.50:3000/side`, 
         {
           //파라미터
+          params: {
+            uid:this.userId
+          }
         }).then(
             (response) => { 
                 this.userDataList = JSON.parse(response.data)
@@ -211,11 +215,11 @@ export default {
           var percent_of_scroll = Math.floor((scroll_top / scroll_body) *100)
 
           if(this.$route.path == '/MainContent'){
-            if (percent_of_scroll >= 100) {
+            if (percent_of_scroll == 100) {
               var self = this
               setTimeout(function() {
                 self.GetUserPastData()
-              }, 300)
+              }, 20000)
             }
           }
         }
@@ -226,6 +230,8 @@ export default {
     }
   },
   created(){
+    //uid설정
+    this.userId = this.$store.getters['auth/uId']
     this.GetUserData()
   },
   mounted(){
