@@ -151,7 +151,7 @@ export default {
         this.keyword ==""
       }
       this.$store.commit('auth/setSearchText', this.keyword)
-      this.$store.commit('auth/setSearchFlag', 1)
+      this.$store.commit('auth/searchFlag', 1)
       this.ChangeTab(2)
     },
     chageLangSelect: function () {
