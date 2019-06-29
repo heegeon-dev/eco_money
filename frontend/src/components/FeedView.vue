@@ -5,7 +5,11 @@
         <slot name="header">
           <div id="user_data">
             <img id="user_img" src="../assets/3.png">
+            <section id="bubble">
+            <div class="rec">
+             <div class="before">
             <p id="user_id">UserName</p>
+            <input class="termfromto" id="write_date" type="form" v-model="termto">
 
             <div id="tag_group">
               <p id="user_hash">#연봉0000</p>
@@ -15,6 +19,12 @@
               <p id="user_hash">#포르쉐</p>
               <p id="user_hash">#반포자이</p>
             </div>
+                 </div>
+                  <div class="after"></div>
+                    <div class="middle"></div>
+                    <div class="small"></div>
+            </div>
+            </section>
           </div>
           <textarea id="write" style="width:95%; heigth:80%"></textarea>
           <div class="userdata">
@@ -62,42 +72,39 @@
 
       <footer class="feed-footer">
         <slot name="footer">
+        <form class="feed-comment-btn" method="POST">
           <section class="“feed-comment”">
-            <span>
-              <button>
-                <span>
-                  <img id="“feed-like”" src="../assets/like.png" aria-label="Like">
-                </span>
+            <div id="btn_group2">
+            
+              <button id="btn2">
+                
+                  <img id="like" src="../assets/like.png">
+                
               </button>
-            </span>
-            <span>
-              <button>
-                <span img id="“feed-comment”" src="../assets/comment.png" aria-label="Comment"></span>
+            
+              <button id="btn2">
+                <img id="like" src="../assets/comment.png">
               </button>
-            </span>
-            <span>
-              <button>
-                <span>
-                  <img id="feed-bookmark" src="../assets/bookmark.png" aria-label="“Bookmark”">
-                </span>
+          
+              <button id="btn2">
+            
+                  <img id="like" src="../assets/bookmark.png">
+               
               </button>
-            </span>
+           
+            </div>
+         
           </section>
+        </form>
 
-          <div class="“feed-comment-time”">
-            <a class="c-Yi7" href="/p/Bw7dI8ylIQrtBHgUNkpgDqv2FA4hcwO6Bq0AxE0/">
-              <time
-                class="_1o9PC Nzb55"
-                datetime="2019-05-01T17:52:59.000Z"
-                title="May 2, 2019"
-              >May 2</time>
-            </a>
-          </div>
+          <!-- <div class="“feed-comment-time”">
+            <input class="termfromto" id="write_date" type="form" v-model="termto">
+          </div> -->
 
           <section>
             <div class="feed-comment-area">
               <form class="feed-comment-post" method="POST">
-                <textarea aria-label="Add a comment…" placeholder="Add a comment…"></textarea>
+                <textarea id="comment_form" placeholder="Add a comment…"></textarea>
                 <button type="submit">Post</button>
               </form>
             </div>
@@ -269,7 +276,7 @@ export default {
     this.graphdataList = ["30%", "20%"];
 
     //기간표시 초기값
-    write_date.termto = moment(new Date()).format("YYYY/MM/DD");
+  
     this.termto = moment(new Date()).format("YYYY/MM/DD");
     this.termfrom = moment(this.termto)
       .subtract(1, "month")
@@ -369,6 +376,11 @@ a {
 p {
   margin-top: 3%;
 }
+
+img#like {
+    width: 15px;
+    height:15px;
+}
 #available p {
   width: 100%;
   font-size: 21px;
@@ -412,6 +424,7 @@ label {
 .user_data {
   box-shadow: 0px 0px 0px 1px grey;
   width: -webkit-fill-available;
+  
 }
 #btn {
   border-top-left-radius: 5px;
@@ -420,6 +433,16 @@ label {
   border-bottom-right-radius: 5px;
   float: left;
   width: 15%;
+}
+
+button#btn2 {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  float: left;
+  width: 50%;
+  display: table-row;
 }
 #btn_group button {
   border: 1px solid #b9bec0;
@@ -434,11 +457,12 @@ label {
   color: white;
   background-color: #fcaf17;
 }
-#Piegraph {
-  position: relative;
 
+ #Piegraph {
+  position: relative;
   float: left;
 }
+
 #graphdetails {
   width: 35%;
   float: left;
@@ -465,6 +489,11 @@ textarea#write {
   height: 20%;
   font-size: larger;
   margin-bottom: 3%;
+  
+}
+
+div#graph{
+    padding: 5%;
 }
 
 p#user_id {
@@ -482,6 +511,7 @@ p#user_id {
   font-size: 9px;
   font-weight: 100;
   margin-right: 2%;
+
 }
 
 .userdata {
@@ -503,5 +533,48 @@ p#user_id {
   margin-top: 5px;
   width: 20%;
   font-size: initial;
+}
+
+input#write_date {
+    width: 30%;
+    border: none;
+    margin-left: 20%;
+    float: right;
+    text-align: end;
+}
+
+.feed-body{
+    display: flex;
+    margin-top: -10%;
+    margin-bottom: -15px;
+}
+
+div#graphdetails{
+    margin-top: -60%;
+    margin-left: 50%;
+}
+
+.feed-footer{
+    margin-top: 1%;
+}
+
+#feed-view {
+     overflow: scroll;
+}
+
+
+
+#feed-comment{
+    margin-left: 30%;
+}
+
+textarea#comment_form{
+        width: 60%;
+}
+
+div#btn_group2{
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
 }
 </style>
