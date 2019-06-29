@@ -56,9 +56,10 @@ export default {
               password: self.password
           }).then(
               (response) => { 
-                console.log("response",response)
+                var res = JSON.parse(response.data)
+                console.log("res",res)
                 if(response.data !== "" || response.data !=="undefind"){
-                  self.$store.commit('auth/uId', response.data)
+                  self.$store.commit('auth/uId', res)
                   self.uid = self.$store.getters['auth/uId']
                   self.$router.push("/MainContent")
                 }
